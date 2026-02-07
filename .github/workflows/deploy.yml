@@ -37,6 +37,8 @@ jobs:
       
       - name: Build web
         run: flutter build web --release --base-href "/rabay_landing/"
+        # ⚠️ ВАЖНО: Если ваш репозиторий называется не "rabay_landing",
+        # замените "/rabay_landing/" на "/ИМЯ_ВАШЕГО_РЕПО/"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
