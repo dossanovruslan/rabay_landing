@@ -48,6 +48,8 @@ dependencies:
   # Utils
   url_launcher: ^6.3.0
   font_awesome_flutter: ^10.7.0
+  carousel_slider: ^5.1.2
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
