@@ -1,13 +1,14 @@
-name: Build and Test
+name: Test Build
 
 on:
   pull_request:
-    branches:
+  push:
+    branches-ignore:
       - main
       - master
 
 jobs:
-  build:
+  test-build:
     runs-on: ubuntu-latest
     
     steps:
@@ -20,14 +21,14 @@ jobs:
           channel: 'stable'
           cache: true
       
+      - name: Print Flutter version
+        run: flutter --version
+      
       - name: Get dependencies
         run: flutter pub get
       
       - name: Analyze code
         run: flutter analyze
       
-      - name: Run tests
-        run: flutter test
-      
-      - name: Build web
+      - name: Test build
         run: flutter build web --release

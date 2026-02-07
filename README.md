@@ -71,19 +71,31 @@ flutter analyze
 
 Проект настроен для автоматического деплоя на GitHub Pages через GitHub Actions.
 
-### Настройка GitHub Pages:
+### Быстрая настройка:
 
-1. Перейдите в Settings → Pages
-2. Выберите Source: GitHub Actions
-3. После push в main/master ветку начнется автоматический деплой
+1. **Настройте GitHub Pages:**
+   - Перейдите в `Settings` → `Pages`
+   - Выберите `Source: GitHub Actions`
 
-### Изменение base-href:
+2. **Обновите base-href в `.github/workflows/deploy.yml`:**
+   ```yaml
+   # Замените "rabay_landing" на имя вашего репозитория
+   flutter build web --release --base-href "/your-repo-name/"
+   ```
 
-Если ваш репозиторий называется не `rabay_landing`, измените в `.github/workflows/deploy.yml`:
+3. **Запушьте изменения:**
+   ```bash
+   git add .
+   git commit -m "Setup deployment"
+   git push origin main
+   ```
 
-```yaml
-flutter build web --release --base-href "/your-repo-name/"
-```
+4. **Готово!** Сайт будет доступен по адресу:
+   ```
+   https://your-username.github.io/your-repo-name/
+   ```
+
+📖 **Подробная инструкция:** см. [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## 📝 Лицензия
 
