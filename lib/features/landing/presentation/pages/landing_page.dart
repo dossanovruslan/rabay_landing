@@ -1,52 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/landing_bloc.dart';
-import '../bloc/landing_event.dart';
+import '../widgets/sections/header_section.dart';
 import '../widgets/sections/hero_section.dart';
-import '../widgets/sections/problem_solution_section.dart';
+import '../widgets/sections/benefits_section.dart';
 import '../widgets/sections/features_section.dart';
-import '../widgets/sections/how_it_works_section.dart';
-import '../widgets/sections/testimonials_section.dart';
-import '../widgets/sections/pricing_section.dart';
-import '../widgets/sections/faq_section.dart';
+import '../widgets/sections/referral_section.dart';
+import '../widgets/sections/cta_section.dart';
+import '../widgets/sections/about_section.dart';
 import '../widgets/sections/footer_section.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LandingBloc()..add(const LoadScreenshots()),
-      child: const Scaffold(
-        backgroundColor: Colors.white,
-        body: _LandingPageBody(),
-      ),
-    );
-  }
+  State<LandingPage> createState() => _LandingPageState();
 }
 
-class _LandingPageBody extends StatelessWidget {
-  const _LandingPageBody();
+class _LandingPageState extends State<LandingPage> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey heroKey = GlobalKey();
+  final GlobalKey featuresKey = GlobalKey();
+  final GlobalKey referralKey = GlobalKey();
+  final GlobalKey aboutKey = GlobalKey();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Add a scrollbar for better UX on web
-    return Scrollbar(
-      child: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Column(
-          children: const [
-            HeroSection(),
-            ProblemSolutionSection(),
-            FeaturesSection(),
-            HowItWorksSection(),
-            TestimonialsSection(),
-            // PricingSection(),
-            FaqSection(),
-            FooterSection(),
-          ],
-        ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          // Main content
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                // Hero Section (with its own background)
+                Container(key: heroKey, child: const HeroSection()),
+
+                // Benefits Section
+                const BenefitsSection(),
+
+                // Features Section
+                Container(key: featuresKey, child: const FeaturesSection()),
+
+                // Referral Section
+                Container(key: referralKey, child: const ReferralSection()),
+
+                // CTA Section
+                const CtaSection(),
+
+                // About Section
+                Container(key: aboutKey, child: const AboutSection()),
+
+                // Footer
+                const FooterSection(),
+              ],
+            ),
+          ),
+
+          // Sticky Header
+          HeaderSection(
+            onNavigate: _scrollToSection,
+            heroKey: heroKey,
+            featuresKey: featuresKey,
+            referralKey: referralKey,
+            aboutKey: aboutKey,
+          ),
+        ],
       ),
     );
   }

@@ -1,145 +1,216 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../../../core/constants/app_constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'dart:html' as html;
+import '../../../../../core/theme/app_theme.dart';
+import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/constants/terms.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
 
-  void _launchUrl(String url) async {
-    if (await canLaunch(url)) await launch(url);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final isDesktop = size.width > 900;
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return Container(
-      color: const Color(0xFF1E1E2E), // Dark footer
+      width: double.infinity,
+      color: AppTheme.darkFooter,
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : 24,
-        vertical: 60,
+        horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
+        vertical: isMobile ? 40 : 60,
       ),
-      child: Column(
-        children: [
-          _buildTopContent(context, isDesktop),
-          const SizedBox(height: 60),
-          const Divider(color: Colors.white24),
-          const SizedBox(height: 32),
-          _buildBottomContent(isDesktop),
-        ],
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Column(
+            children: [
+              isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
+              const SizedBox(height: 40),
+              const Divider(color: Colors.white24),
+              const SizedBox(height: 24),
+              _buildCopyright(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildTopContent(BuildContext context, bool isDesktop) {
-    if (isDesktop) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(flex: 2, child: _buildBrandCol()),
-          Expanded(
-            child: _buildLinksCol('Компания', ['О нас', 'Вакасии', 'Блог']),
-          ),
-          Expanded(
-            child: _buildLinksCol('Поддержка', ['Помощь', 'Контакты', 'FAQ']),
-          ),
-          Expanded(
-            child: _buildLinksCol('Юридическая информация', [
-              'Политика конфиденциальности',
-              'Условия использования',
-            ]),
-          ),
-        ],
-      );
-    } else {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildBrandCol(),
-          const SizedBox(height: 40),
-          Wrap(
-            spacing: 40,
-            runSpacing: 40,
-            children: [
-              _buildLinksCol('Компания', ['О нас', 'Вакасии', 'Блог']),
-              _buildLinksCol('Поддержка', ['Помощь', 'Контакты', 'FAQ']),
-              _buildLinksCol('Юридическая информация', [
-                'Политика конфиденциальности',
-                'Условия использования',
-              ]),
-            ],
-          ),
-        ],
-      );
-    }
+  Widget _buildDesktopLayout() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(flex: 3, child: _buildBrandSection()),
+        const SizedBox(width: 60),
+        Expanded(flex: 4, child: _buildLinksSection()),
+        const SizedBox(width: 60),
+        Expanded(flex: 3, child: _buildContactSection()),
+      ],
+    );
   }
 
-  Widget _buildBrandCol() {
+  Widget _buildMobileLayout() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'RaBay',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-          ),
+        _buildBrandSection(),
+        const SizedBox(height: 32),
+        _buildLinksSection(),
+        const SizedBox(height: 32),
+        _buildContactSection(),
+      ],
+    );
+  }
+
+  Widget _buildBrandSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [AppTheme.primaryColor, AppTheme.primaryDark],
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.account_balance_wallet_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              AppConstants.appName,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         Text(
-          'Ваш умный помощник в мире финансов.\nКонтролируйте, планируйте и приумножайте.',
+          AppConstants.footerDescription,
           style: TextStyle(
+            fontSize: 14,
             color: Colors.white.withOpacity(0.7),
-            fontSize: 16,
-            height: 1.5,
+            height: 1.6,
           ),
-        ),
-        const SizedBox(height: 24),
-        Row(
-          children: [
-            _buildSocialIcon(Icons.camera_alt, AppConstants.instagramUrl),
-            const SizedBox(width: 16),
-            _buildSocialIcon(Icons.send, AppConstants.telegramUrl),
-            const SizedBox(width: 16),
-            _buildSocialIcon(Icons.facebook, AppConstants.facebookUrl),
-          ],
         ),
       ],
     );
   }
 
-  Widget _buildLinksCol(String title, List<String> links) {
+  Widget _buildLinksSection() {
+    return Wrap(
+      spacing: 24,
+      runSpacing: 12,
+      children: AppConstants.footerLinks.map((link) {
+        return InkWell(
+          onTap: () => _handleLinkTap(link),
+          child: Text(
+            link['title']!,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.white.withOpacity(0.8),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  void _handleLinkTap(Map<String, String> link) {
+    final type = link['type'] ?? 'link';
+
+    if (type == 'terms') {
+      _showTermsInNewWindow(link);
+    } else {
+      _launchUrl(link['url']!);
+    }
+  }
+
+  void _showTermsInNewWindow(Map<String, String> link) {
+    final contentKey = link['contentKey'];
+    String htmlContent = '';
+
+    if (contentKey == 'termsOfService') {
+      htmlContent = termsOfService;
+    } else if (contentKey == 'privacyPolicy') {
+      htmlContent = privacyPolicy;
+    }
+
+    if (htmlContent.isNotEmpty) {
+      // Открываем HTML контент в новой вкладке
+      final blob = html.Blob([htmlContent], 'text/html');
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      html.window.open(url, '_blank');
+      html.Url.revokeObjectUrl(url);
+    }
+  }
+
+  Widget _buildContactSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          'Контакты',
           style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        const SizedBox(height: 24),
-        ...links.map(
-          (link) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: InkWell(
-              onTap: () {},
-              child: Text(
-                link,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.7),
-                  fontSize: 16,
-                ),
-              ),
+        const SizedBox(height: 16),
+
+        // Email
+        InkWell(
+          onTap: () => _launchUrl(AppConstants.emailUrl),
+          child: Text(
+            AppConstants.emailUrl.replaceAll('mailto:', ''),
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.white.withOpacity(0.8),
             ),
           ),
+        ),
+        const SizedBox(height: 16),
+
+        // Social media
+        Text(
+          'Социальные сети',
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            _buildSocialIcon(
+              FontAwesomeIcons.instagram,
+              AppConstants.instagramUrl,
+            ),
+            const SizedBox(width: 16),
+            _buildSocialIcon(
+              FontAwesomeIcons.telegram,
+              AppConstants.telegramUrl,
+            ),
+            const SizedBox(width: 16),
+            _buildSocialIcon(
+              FontAwesomeIcons.facebook,
+              AppConstants.facebookUrl,
+            ),
+          ],
         ),
       ],
     );
@@ -152,60 +223,25 @@ class FooterSection extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.1),
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(icon, color: Colors.white, size: 20),
       ),
     );
   }
 
-  Widget _buildBottomContent(bool isDesktop) {
-    final copyright = Text(
-      '© ${DateTime.now().year} RaBay. Все права защищены.',
-      style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 14),
-      textAlign: isDesktop ? TextAlign.start : TextAlign.center,
+  Widget _buildCopyright() {
+    return Text(
+      AppConstants.copyrightText,
+      style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.6)),
+      textAlign: TextAlign.center,
     );
-
-    if (isDesktop) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          copyright,
-          Row(
-            children: [
-              _buildStoreBadge('App Store'),
-              const SizedBox(width: 16),
-              _buildStoreBadge('Google Play'),
-            ],
-          ),
-        ],
-      );
-    } else {
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildStoreBadge('App Store'),
-              const SizedBox(width: 16),
-              _buildStoreBadge('Google Play'),
-            ],
-          ),
-          const SizedBox(height: 24),
-          copyright,
-        ],
-      );
-    }
   }
 
-  Widget _buildStoreBadge(String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.white24),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(text, style: const TextStyle(color: Colors.white)),
-    );
+  Future<void> _launchUrl(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

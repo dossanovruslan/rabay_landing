@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color.fromARGB(255, 16, 181, 222);
-  static const Color secondaryColor = Color(0xFF00D4FF);
-  static const Color accentColor = Color(0xFFFF6584);
-  static const Color backgroundColor = Color(0xFFF8F9FA);
+  // Main color as per new specification: #03a8c6
+  static const Color primaryColor = Color(0xFF03A8C6);
+  static const Color primaryDark = Color(0xFF0296B3);
+  static const Color secondaryColor = Color(0xFF03A8C6);
+  static const Color accentColor = Color(0xFF03A8C6);
+  static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color surfaceColor = Colors.white;
-  static const Color textPrimary = Color(0xFF2D3436);
-  static const Color textSecondary = Color(0xFF636E72);
+  static const Color lightSectionBg = Color(0xFFF8FAFB);
+  static const Color textPrimary = Color(0xFF1A1A1A);
+  static const Color textSecondary = Color(0xFF666666);
+  static const Color darkFooter = Color(0xFF1A1A1A);
 
   static ThemeData get lightTheme {
     return ThemeData(
