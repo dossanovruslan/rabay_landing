@@ -121,7 +121,7 @@ class _BenefitCardState extends State<_BenefitCard> {
         padding: const EdgeInsets.all(40),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(32),
           border: Border.all(
             color: AppTheme.primaryColor.withOpacity(0.1),
             width: 1,

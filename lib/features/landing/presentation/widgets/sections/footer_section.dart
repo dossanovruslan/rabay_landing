@@ -134,7 +134,7 @@ class FooterSection extends StatelessWidget {
     if (type == 'terms') {
       _showTermsInNewWindow(link);
     } else {
-      _launchUrl(link['url']!);
+      // _launchUrl(link['url']!);
     }
   }
 

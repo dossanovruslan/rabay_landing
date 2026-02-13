@@ -43,8 +43,8 @@ class CtaSection extends StatelessWidget {
     return Row(
       children: [
         Expanded(flex: 6, child: _buildTextContent(false)),
-        const SizedBox(width: 60),
-        Expanded(flex: 4, child: _buildPhoneMockup(false)),
+        // const SizedBox(width: 60),
+        // Expanded(flex: 4, child: _buildPhoneMockup(false)),
       ],
     );
   }

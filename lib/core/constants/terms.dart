@@ -3,9 +3,119 @@ const String privacyPolicy = '''
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Политика конфиденциальности</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.8;
+      color: #2c3e50;
+      background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      color: #03A8C6;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+      border-bottom: 3px solid #03A8C6;
+      padding-bottom: 20px;
+    }
+    
+    h2 {
+      color: #0296B3;
+      font-size: 1.8em;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      border-left: 5px solid #03A8C6;
+      padding-left: 15px;
+    }
+    
+    h3 {
+      color: #03A8C6;
+      font-size: 1.4em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    p {
+      margin-bottom: 20px;
+      text-align: justify;
+      font-size: 1.05em;
+      color: #34495e;
+    }
+    
+    strong {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    
+    ul {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    
+    li {
+      margin-bottom: 12px;
+      color: #34495e;
+      font-size: 1.05em;
+      line-height: 1.7;
+    }
+    
+    .contact-info {
+      background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%);
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 40px;
+      border-left: 4px solid #03A8C6;
+    }
+    
+    .contact-info p {
+      margin-bottom: 10px;
+      font-size: 1.05em;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      h2 {
+        font-size: 1.5em;
+      }
+      
+      body {
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
+<div class="container">
 
 <h1>Политика конфиденциальности</h1>
 
@@ -257,17 +367,16 @@ const String privacyPolicy = '''
 8.1. Настоящая Политика может быть изменена или прекращена Правообладателем в одностороннем порядке без предварительного уведомления Пользователя.
 </p>
 
+<div class="contact-info">
 <h3>Реквизиты Правообладателя</h3>
-
-<p><strong>Наименование:</strong> ИП «Dossanov Ruslan» ;</p>
+<p><strong>Наименование:</strong> ИП «Dossanov Ruslan»</p>
 <p><strong>ИИН:</strong> 860214301078</p>
 <p><strong>Юридический адрес:</strong> г.Семей, улица Утепбаева, здание 50В.</p>
 <p><strong>E-mail:</strong> dossanovruslan@gmail.com</p>
+<p style="margin-top: 20px; font-style: italic; color: #7f8c8d;">Действующая редакция от 2 февраля 2026 г.</p>
+</div>
 
-<p>
-Действующая редакция от 2 февраля 2026 г.
-</p>
-
+</div>
 </body>
 </html>
 ''';
@@ -277,9 +386,119 @@ const String termsOfService = '''
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Пользовательское соглашение</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.8;
+      color: #2c3e50;
+      background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      color: #03A8C6;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+      border-bottom: 3px solid #03A8C6;
+      padding-bottom: 20px;
+    }
+    
+    h2 {
+      color: #0296B3;
+      font-size: 1.8em;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      border-left: 5px solid #03A8C6;
+      padding-left: 15px;
+    }
+    
+    h3 {
+      color: #03A8C6;
+      font-size: 1.4em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    p {
+      margin-bottom: 20px;
+      text-align: justify;
+      font-size: 1.05em;
+      color: #34495e;
+    }
+    
+    strong {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    
+    ul {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+    
+    li {
+      margin-bottom: 12px;
+      color: #34495e;
+      font-size: 1.05em;
+      line-height: 1.7;
+    }
+    
+    .contact-info {
+      background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%);
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 40px;
+      border-left: 4px solid #03A8C6;
+    }
+    
+    .contact-info p {
+      margin-bottom: 10px;
+      font-size: 1.05em;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      h2 {
+        font-size: 1.5em;
+      }
+      
+      body {
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
+<div class="container">
 
 <h1>Пользовательское соглашение</h1>
 
@@ -523,25 +742,16 @@ const String termsOfService = '''
 7.5. Редакция Соглашения. Действующая редакция настоящего Соглашения размещена в приложений RaBay.
 </p>
 
+<div class="contact-info">
 <h3>Реквизиты Правообладателя</h3>
+<p><strong>Наименование:</strong> ИП «Dossanov Ruslan»</p>
+<p><strong>ИИН:</strong> 860214301078</p>
+<p><strong>Юридический адрес:</strong> г.Семей, улица Утепбаева, здание 50в.</p>
+<p><strong>E-mail:</strong> dossanovruslan@gmail.com</p>
+<p style="margin-top: 20px; font-style: italic; color: #7f8c8d;">Действующая редакция от 02 февраля 2026 г.</p>
+</div>
 
-<p>
-<strong>Наименование:</strong> ИП «Dossanov Ruslan»;
-</p>
-<p>
-<strong>ИИН:</strong> 860214301078
-</p>
-<p>
-<strong>Юридический адрес:</strong> г.Семей, улица Утепбаева, здание 50в.
-</p>
-<p>
-<strong>E-mail:</strong> dossanovruslan@gmail.com
-</p>
-
-<p>
-Действующая редакция от 02 февраля 2026 г.
-</p>
-
+</div>
 </body>
 </html>
 

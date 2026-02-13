@@ -209,7 +209,10 @@ class _LevelCardState extends State<_LevelCard> {
     final colors = [
       [AppTheme.primaryColor, AppTheme.primaryDark],
       [const Color(0xFF00D4FF), const Color(0xFF0099CC)],
-      [const Color(0xFF9C27B0), const Color(0xFF7B1FA2)],
+      [
+        const Color.fromARGB(255, 85, 155, 254),
+        const Color.fromARGB(255, 94, 145, 249),
+      ],
     ];
 
     return FadeInUp(
@@ -228,7 +231,7 @@ class _LevelCardState extends State<_LevelCard> {
               end: Alignment.bottomRight,
               colors: colors[levelNum - 1],
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(32),
             boxShadow: [
               BoxShadow(
                 color: colors[levelNum - 1][0].withOpacity(

@@ -78,7 +78,7 @@ class _HeaderSectionState extends State<HeaderSection> {
               minHeight: isMobile ? 56 : 180,
             ),
             decoration: BoxDecoration(
-              color: AppTheme.primaryColor.withAlpha(220),
+              color: Colors.white.withAlpha(100),
               borderRadius: BorderRadius.circular(14),
             ),
 
@@ -129,7 +129,7 @@ class _HeaderSectionState extends State<HeaderSection> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: _isScrolled ? AppTheme.textPrimary : Colors.white,
+              color: AppTheme.textPrimary,
             ),
           ),
       ],
@@ -160,7 +160,7 @@ class _HeaderSectionState extends State<HeaderSection> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: _isScrolled ? AppTheme.textPrimary : Colors.white,
+            color: _isScrolled ? AppTheme.textPrimary : AppTheme.textPrimary,
           ),
         ),
       ),
