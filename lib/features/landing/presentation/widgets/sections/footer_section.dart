@@ -169,7 +169,7 @@ class FooterSection extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
 
         // Email
         InkWell(
@@ -205,6 +205,8 @@ class FooterSection extends StatelessWidget {
               FontAwesomeIcons.telegram,
               AppConstants.telegramUrl,
             ),
+            const SizedBox(width: 16),
+            _buildSocialIcon(FontAwesomeIcons.tiktok, AppConstants.tiktokUrl),
             const SizedBox(width: 16),
             _buildSocialIcon(
               FontAwesomeIcons.facebook,

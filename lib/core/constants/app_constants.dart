@@ -14,7 +14,9 @@ class AppConstants {
   static const String facebookUrl =
       'https://www.instagram.com/rabay.kz?igsh=MWoyNGhrYzN5aWR0dw%3D%3D&utm_source=qr';
   static const String telegramUrl = 'https://t.me/c/3693784616/1';
-  static const String emailUrl = 'mailto:support @finance.app';
+  static const String tiktokUrl =
+      'https://www.tiktok.com/@rabay.kz?_r=1&_t=ZS-93y8Mffu3WP';
+  static const String emailUrl = 'mailto: rabay.dev@gmail.com';
 
   // Legal Links
   static const String privacyPolicyUrl = 'https://finance.app/privacy';
@@ -200,9 +202,9 @@ class AppConstants {
       'Ваш надежный помощник в управлении личными финансами';
 
   static const List<Map<String, String>> footerLinks = [
-    {'title': 'О нас', 'url': '#about', 'type': 'link'},
-    {'title': 'Возможности', 'url': '#features', 'type': 'link'},
-    {'title': 'Поддержка', 'url': emailUrl, 'type': 'link'},
+    // {'title': 'О нас', 'url': '#about', 'type': 'link'},
+    // {'title': 'Возможности', 'url': '#features', 'type': 'link'},
+    // {'title': 'Поддержка', 'url': emailUrl, 'type': 'link'},
     {
       'title': 'Пользовательское соглашение',
       'type': 'terms',
