@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Main color as per new specification: #03a8c6
-  static const Color primaryColor = Color(0xFF03A8C6);
-  static const Color primaryDark = Color(0xFF0296B3);
-  static const Color secondaryColor = Color(0xFF03A8C6);
-  static const Color accentColor = Color(0xFF03A8C6);
-  static const Color backgroundColor = Color(0xFFFFFFFF);
-  static const Color surfaceColor = Colors.white;
-  static const Color lightSectionBg = Color(0xFFF8FAFB);
-  static const Color textPrimary = Color(0xFF1A1A1A);
-  static const Color textSecondary = Color(0xFF666666);
-  static const Color darkFooter = Color(0xFF1A1A1A);
+  static const Color primaryColor = Color(0xFF038AA6);
+  static const Color primaryDark = Color(0xFF026D83);
+  static const Color secondaryColor = Color(0xFF038AA6);
+  static const Color accentColor = Color(0xFF038AA6);
+  static const Color backgroundColor = Color(0xFFF5F7FA);
+  static const Color surfaceColor = Color(0xFFFFFFFF);
+  static const Color lightSectionBg = Color(0xFFEEF2F6);
+  static const Color textPrimary = Color(0xFF111827);
+  static const Color textSecondary = Color(0xFF4B5563);
+  static const Color darkFooter = Color(0xFF0F172A);
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -26,8 +25,8 @@ class AppTheme {
       scaffoldBackgroundColor: backgroundColor,
       textTheme: GoogleFonts.interTextTheme().copyWith(
         displayLarge: GoogleFonts.inter(
-          fontSize: 56,
-          fontWeight: FontWeight.bold,
+          fontSize: 54,
+          fontWeight: FontWeight.w700,
           color: textPrimary,
           height: 1.1,
         ),
@@ -64,7 +63,7 @@ class AppTheme {
           color: textPrimary,
         ),
         bodyLarge: GoogleFonts.inter(
-          fontSize: 18,
+          fontSize: 17,
           fontWeight: FontWeight.normal,
           color: textSecondary,
           height: 1.6,
@@ -80,9 +79,9 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
           textStyle: GoogleFonts.inter(
@@ -94,7 +93,10 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: surfaceColor,
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: const BorderSide(color: Color(0xFFE5E7EB)),
+        ),
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,147 +16,88 @@ class CtaSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppTheme.primaryColor, AppTheme.primaryDark],
-        ),
-      ),
+      color: AppTheme.backgroundColor,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 60 : 100,
+        vertical: isMobile ? 56 : 84,
       ),
       child: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1200),
-          child: isMobile || isTablet
-              ? _buildMobileLayout(isMobile)
-              : _buildDesktopLayout(),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDesktopLayout() {
-    return Row(
-      children: [
-        Expanded(flex: 6, child: _buildTextContent(false)),
-        // const SizedBox(width: 60),
-        // Expanded(flex: 4, child: _buildPhoneMockup(false)),
-      ],
-    );
-  }
-
-  Widget _buildMobileLayout(bool isMobile) {
-    return Column(
-      children: [
-        _buildTextContent(isMobile),
-        SizedBox(height: isMobile ? 32 : 40),
-        _buildPhoneMockup(isMobile),
-      ],
-    );
-  }
-
-  Widget _buildTextContent(bool isMobile) {
-    return FadeInLeft(
-      duration: const Duration(milliseconds: 800),
-      child: Column(
-        crossAxisAlignment: isMobile
-            ? CrossAxisAlignment.center
-            : CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppConstants.ctaTitle,
-            style: TextStyle(
-              fontSize: isMobile ? 32 : 42,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              height: 1.2,
-            ),
-            textAlign: isMobile ? TextAlign.center : TextAlign.left,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            AppConstants.ctaSubtitle,
-            style: TextStyle(
-              fontSize: isMobile ? 16 : 18,
-              color: Colors.white.withOpacity(0.9),
-              height: 1.6,
-            ),
-            textAlign: isMobile ? TextAlign.center : TextAlign.left,
-          ),
-          const SizedBox(height: 40),
-
-          // Download buttons
-          isMobile
-              ? Column(
-                  children: [
-                    _buildAppStoreButton(isFullWidth: true),
-                    const SizedBox(height: 16),
-                    _buildGooglePlayButton(isFullWidth: true),
-                  ],
-                )
-              : Row(
-                  children: [
-                    _buildAppStoreButton(isFullWidth: false),
-                    const SizedBox(width: 16),
-                    _buildGooglePlayButton(isFullWidth: false),
-                  ],
-                ),
-
-          const SizedBox(height: 40),
-
-          // Stats
-          _buildStats(isMobile),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPhoneMockup(bool isMobile) {
-    return FadeInRight(
-      duration: const Duration(milliseconds: 1000),
-      child: Center(
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: isMobile ? 250 : 300,
-            maxHeight: isMobile ? 500 : 600,
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20 : 44,
+            vertical: isMobile ? 24 : 36,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 40,
-                offset: const Offset(0, 20),
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 18,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image.asset(
-              AppConstants.screenAccounts,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.phone_iphone,
-                      size: 80,
-                      color: Colors.white,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          child: _buildDesktopLayout(isMobile || isTablet),
         ),
       ),
+    );
+  }
+
+  Widget _buildDesktopLayout(bool isCompact) {
+    if (isCompact) {
+      return _buildTextContent(true);
+    }
+    return Row(children: [Expanded(child: _buildTextContent(false))]);
+  }
+
+  Widget _buildTextContent(bool isMobile) {
+    return Column(
+      crossAxisAlignment: isMobile
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppConstants.ctaTitle,
+          style: TextStyle(
+            fontSize: isMobile ? 30 : 40,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.textPrimary,
+            height: 1.2,
+          ),
+          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+        ),
+        const SizedBox(height: 18),
+        Text(
+          AppConstants.ctaSubtitle,
+          style: TextStyle(
+            fontSize: isMobile ? 16 : 18,
+            color: AppTheme.textSecondary,
+            height: 1.6,
+          ),
+          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+        ),
+        const SizedBox(height: 32),
+        isMobile
+            ? Column(
+                children: [
+                  _buildAppStoreButton(isFullWidth: true),
+                  const SizedBox(height: 12),
+                  _buildGooglePlayButton(isFullWidth: true),
+                ],
+              )
+            : Row(
+                children: [
+                  _buildAppStoreButton(isFullWidth: false),
+                  const SizedBox(width: 12),
+                  _buildGooglePlayButton(isFullWidth: false),
+                ],
+              ),
+        const SizedBox(height: 30),
+        _buildStats(isMobile),
+      ],
     );
   }
 
@@ -187,8 +127,8 @@ class CtaSection extends StatelessWidget {
       text: 'App Store',
       icon: FontAwesomeIcons.apple,
       onPressed: () => _launchUrl(AppConstants.appStoreUrl),
-      backgroundColor: Colors.white,
-      textColor: AppTheme.primaryColor,
+      backgroundColor: AppTheme.textPrimary,
+      textColor: Colors.white,
       isFullWidth: isFullWidth,
     );
   }
@@ -198,8 +138,8 @@ class CtaSection extends StatelessWidget {
       text: 'Google Play',
       icon: FontAwesomeIcons.googlePlay,
       onPressed: () => _launchUrl(AppConstants.googlePlayUrl),
-      backgroundColor: Colors.white,
-      textColor: AppTheme.primaryColor,
+      backgroundColor: AppTheme.primaryColor,
+      textColor: Colors.white,
       isFullWidth: isFullWidth,
     );
   }
@@ -226,15 +166,15 @@ class _StatItem extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+            fontSize: 34,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.textPrimary,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.8)),
+          style: const TextStyle(fontSize: 14, color: AppTheme.textSecondary),
         ),
       ],
     );

@@ -34,21 +34,24 @@ class _AppButtonState extends State<AppButton>
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        transform: Matrix4.translationValues(0, _isHovered ? -4 : 0, 0),
+        transform: Matrix4.translationValues(0, _isHovered ? -1 : 0, 0),
         width: widget.isFullWidth ? double.infinity : null,
         child: ElevatedButton.icon(
           onPressed: widget.onPressed,
-          icon: Icon(widget.icon, size: 20),
+          icon: Icon(widget.icon, size: 18),
           label: Text(widget.text),
           style: ElevatedButton.styleFrom(
             backgroundColor: widget.backgroundColor,
             foregroundColor: widget.textColor,
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
-            elevation: _isHovered ? 12 : 4,
-            shadowColor: widget.backgroundColor.withOpacity(0.4),
+            side: widget.backgroundColor == Colors.white
+                ? BorderSide(color: Colors.grey.withValues(alpha: 0.25))
+                : null,
+            elevation: _isHovered ? 1 : 0,
+            shadowColor: widget.backgroundColor.withValues(alpha: 0.2),
             textStyle: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,

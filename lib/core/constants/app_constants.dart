@@ -11,6 +11,10 @@ class AppConstants {
   // Social Links
   static const String instagramUrl =
       'https://www.instagram.com/rabay.kz?igsh=MWoyNGhrYzN5aWR0dw%3D%3D&utm_source=qr';
+
+  static const String threadsUrl =
+      'https://www.threads.com/@rabay.kz?igshid=NTc4MTIwNjQ2YQ==';
+
   static const String facebookUrl =
       'https://www.instagram.com/rabay.kz?igsh=MWoyNGhrYzN5aWR0dw%3D%3D&utm_source=qr';
   static const String telegramUrl = 'https://t.me/c/3693784616/1';
@@ -153,21 +157,21 @@ class AppConstants {
     'levels': [
       {
         'level': 1,
-        'percentage': '6%',
+        'percentage': '8%',
         'title': '1-й уровень',
         'subtitle': 'Ваши прямые рефералы',
         'description': 'Доход от подписки',
       },
       {
         'level': 2,
-        'percentage': '3%',
+        'percentage': '4%',
         'title': '2-й уровень',
         'subtitle': 'Рефералы ваших рефералов',
         'description': 'Пассивный доход',
       },
       {
         'level': 3,
-        'percentage': '1%',
+        'percentage': '2%',
         'title': '3-й уровень',
         'subtitle': 'Расширенная сеть',
         'description': 'Дополнительный доход',

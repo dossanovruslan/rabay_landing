@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
@@ -16,9 +15,9 @@ class BenefitsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 60 : 100,
+        vertical: isMobile ? 56 : 88,
       ),
-      color: Colors.white,
+      color: AppTheme.surfaceColor,
       child: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1200),
@@ -34,11 +33,11 @@ class BenefitsSection extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: _buildBenefitCard(0, delay: 200)),
+        Expanded(child: _buildBenefitCard(0)),
         const SizedBox(width: 32),
-        Expanded(child: _buildBenefitCard(1, delay: 400)),
+        Expanded(child: _buildBenefitCard(1)),
         const SizedBox(width: 32),
-        Expanded(child: _buildBenefitCard(2, delay: 600)),
+        Expanded(child: _buildBenefitCard(2)),
       ],
     );
   }
@@ -49,13 +48,13 @@ class BenefitsSection extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _buildBenefitCard(0, delay: 200)),
+            Expanded(child: _buildBenefitCard(0)),
             const SizedBox(width: 24),
-            Expanded(child: _buildBenefitCard(1, delay: 400)),
+            Expanded(child: _buildBenefitCard(1)),
           ],
         ),
         const SizedBox(height: 24),
-        _buildBenefitCard(2, delay: 600),
+        _buildBenefitCard(2),
       ],
     );
   }
@@ -63,16 +62,16 @@ class BenefitsSection extends StatelessWidget {
   Widget _buildMobileLayout() {
     return Column(
       children: [
-        _buildBenefitCard(0, delay: 200),
+        _buildBenefitCard(0),
         const SizedBox(height: 24),
-        _buildBenefitCard(1, delay: 400),
+        _buildBenefitCard(1),
         const SizedBox(height: 24),
-        _buildBenefitCard(2, delay: 600),
+        _buildBenefitCard(2),
       ],
     );
   }
 
-  Widget _buildBenefitCard(int index, {required int delay}) {
+  Widget _buildBenefitCard(int index) {
     final benefit = AppConstants.benefits[index];
     final icons = [
       Icons.assessment_rounded,
@@ -80,14 +79,10 @@ class BenefitsSection extends StatelessWidget {
       Icons.list_alt_rounded,
     ];
 
-    return FadeInUp(
-      duration: const Duration(milliseconds: 800),
-      delay: Duration(milliseconds: delay),
-      child: _BenefitCard(
-        icon: icons[index],
-        title: benefit['title']!,
-        description: benefit['description']!,
-      ),
+    return _BenefitCard(
+      icon: icons[index],
+      title: benefit['title']!,
+      description: benefit['description']!,
     );
   }
 }
@@ -117,22 +112,22 @@ class _BenefitCardState extends State<_BenefitCard> {
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        transform: Matrix4.translationValues(0, _isHovered ? -8 : 0, 0),
-        padding: const EdgeInsets.all(40),
+        transform: Matrix4.translationValues(0, _isHovered ? -2 : 0, 0),
+        padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: AppTheme.primaryColor.withOpacity(0.1),
+            color: _isHovered
+                ? AppTheme.primaryColor.withValues(alpha: 0.35)
+                : Colors.grey.withValues(alpha: 0.18),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: _isHovered
-                  ? AppTheme.primaryColor.withOpacity(0.15)
-                  : Colors.black.withOpacity(0.08),
-              blurRadius: _isHovered ? 20 : 12,
-              offset: Offset(0, _isHovered ? 8 : 4),
+              color: Colors.black.withValues(alpha: _isHovered ? 0.08 : 0.05),
+              blurRadius: _isHovered ? 16 : 10,
+              offset: Offset(0, _isHovered ? 8 : 5),
             ),
           ],
         ),
@@ -141,23 +136,22 @@ class _BenefitCardState extends State<_BenefitCard> {
           children: [
             // Icon
             Container(
-              padding: const EdgeInsets.all(16),
+              width: 48,
+              height: 48,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppTheme.primaryColor, AppTheme.primaryDark],
-                ),
+                color: AppTheme.primaryColor.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(widget.icon, size: 32, color: Colors.white),
+              child: Icon(widget.icon, size: 24, color: AppTheme.primaryColor),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 18),
 
             // Title
             Text(
               widget.title,
               style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
                 color: AppTheme.textPrimary,
               ),
             ),

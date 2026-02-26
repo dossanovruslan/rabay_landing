@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../common/app_button.dart';
@@ -17,19 +17,9 @@ class ReferralSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 60 : 100,
+        vertical: isMobile ? 60 : 88,
       ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppTheme.primaryColor.withOpacity(0.05),
-            Colors.white,
-            AppTheme.primaryColor.withOpacity(0.08),
-          ],
-        ),
-      ),
+      color: AppTheme.lightSectionBg,
       child: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1200),
@@ -53,7 +43,9 @@ class ReferralSection extends StatelessWidget {
               AppButton(
                 text: 'Начать зарабатывать',
                 icon: Icons.rocket_launch,
-                onPressed: () {},
+                onPressed: () => _launchUrl(AppConstants.appStoreUrl),
+                backgroundColor: AppTheme.primaryColor,
+                textColor: Colors.white,
                 isFullWidth: isMobile,
               ),
             ],
@@ -63,34 +55,38 @@ class ReferralSection extends StatelessWidget {
     );
   }
 
+  Future<void> _launchUrl(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   Widget _buildTitleSection(bool isMobile) {
     final program = AppConstants.referralProgram;
 
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Column(
-        children: [
-          Text(
-            program['title'] as String,
-            style: TextStyle(
-              fontSize: isMobile ? 32 : 42,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.textPrimary,
-            ),
-            textAlign: TextAlign.center,
+    return Column(
+      children: [
+        Text(
+          program['title'] as String,
+          style: TextStyle(
+            fontSize: isMobile ? 32 : 42,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.textPrimary,
           ),
-          const SizedBox(height: 16),
-          Text(
-            program['subtitle'] as String,
-            style: TextStyle(
-              fontSize: isMobile ? 18 : 20,
-              color: AppTheme.primaryColor,
-              fontWeight: FontWeight.w600,
-            ),
-            textAlign: TextAlign.center,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          program['subtitle'] as String,
+          style: TextStyle(
+            fontSize: isMobile ? 17 : 18,
+            color: AppTheme.textSecondary,
+            fontWeight: FontWeight.w500,
           ),
-        ],
-      ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 
@@ -107,7 +103,7 @@ class ReferralSection extends StatelessWidget {
               left: index == 0 ? 0 : 16,
               right: index == levels.length - 1 ? 0 : 16,
             ),
-            child: _LevelCard(level: levels[index], delay: 200 + (index * 200)),
+            child: _LevelCard(level: levels[index]),
           ),
         ),
       ),
@@ -122,7 +118,7 @@ class ReferralSection extends StatelessWidget {
         levels.length,
         (index) => Padding(
           padding: const EdgeInsets.only(bottom: 24),
-          child: _LevelCard(level: levels[index], delay: 200 + (index * 200)),
+          child: _LevelCard(level: levels[index]),
         ),
       ),
     );
@@ -132,69 +128,65 @@ class ReferralSection extends StatelessWidget {
     final howItWorks =
         AppConstants.referralProgram['howItWorks'] as List<String>;
 
-    return FadeInUp(
-      duration: const Duration(milliseconds: 800),
-      child: Column(
-        children: [
-          Text(
-            'Как это работает',
-            style: TextStyle(
-              fontSize: isMobile ? 24 : 28,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.textPrimary,
-            ),
+    return Column(
+      children: [
+        Text(
+          'Как это работает',
+          style: TextStyle(
+            fontSize: isMobile ? 24 : 28,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.textPrimary,
           ),
-          const SizedBox(height: 32),
-          ...List.generate(
-            howItWorks.length,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primaryColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${index + 1}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+        ),
+        const SizedBox(height: 28),
+        ...List.generate(
+          howItWorks.length,
+          (index) => Padding(
+            padding: const EdgeInsets.only(bottom: 14),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryColor.withValues(alpha: 0.14),
+                    shape: BoxShape.circle,
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
+                  child: Center(
                     child: Text(
-                      howItWorks[index],
-                      style: TextStyle(
-                        fontSize: isMobile ? 15 : 16,
-                        color: AppTheme.textPrimary,
+                      '${index + 1}',
+                      style: const TextStyle(
+                        color: AppTheme.primaryColor,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    howItWorks[index],
+                    style: TextStyle(
+                      fontSize: isMobile ? 15 : 16,
+                      color: AppTheme.textPrimary,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
 class _LevelCard extends StatefulWidget {
   final Map<String, dynamic> level;
-  final int delay;
 
-  const _LevelCard({required this.level, required this.delay});
+  const _LevelCard({required this.level});
 
   @override
   State<_LevelCard> createState() => _LevelCardState();
@@ -205,89 +197,67 @@ class _LevelCardState extends State<_LevelCard> {
 
   @override
   Widget build(BuildContext context) {
-    final levelNum = widget.level['level'] as int;
-    final colors = [
-      [AppTheme.primaryColor, AppTheme.primaryDark],
-      [const Color(0xFF00D4FF), const Color(0xFF0099CC)],
-      [
-        const Color.fromARGB(255, 85, 155, 254),
-        const Color.fromARGB(255, 94, 145, 249),
-      ],
-    ];
-
-    return FadeInUp(
-      duration: const Duration(milliseconds: 800),
-      delay: Duration(milliseconds: widget.delay),
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _isHovered = true),
-        onExit: (_) => setState(() => _isHovered = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          transform: Matrix4.translationValues(0, _isHovered ? -8 : 0, 0),
-          padding: const EdgeInsets.all(32),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: colors[levelNum - 1],
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        transform: Matrix4.translationValues(0, _isHovered ? -2 : 0, 0),
+        padding: const EdgeInsets.all(28),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: _isHovered
+                ? AppTheme.primaryColor.withValues(alpha: 0.35)
+                : Colors.grey.withValues(alpha: 0.2),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: _isHovered ? 0.07 : 0.04),
+              blurRadius: _isHovered ? 16 : 10,
+              offset: const Offset(0, 8),
             ),
-            borderRadius: BorderRadius.circular(32),
-            boxShadow: [
-              BoxShadow(
-                color: colors[levelNum - 1][0].withOpacity(
-                  _isHovered ? 0.4 : 0.3,
-                ),
-                blurRadius: _isHovered ? 20 : 15,
-                offset: Offset(0, _isHovered ? 10 : 8),
+          ],
+        ),
+        child: Column(
+          children: [
+            Text(
+              widget.level['percentage'] as String,
+              style: const TextStyle(
+                fontSize: 44,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.primaryColor,
               ),
-            ],
-          ),
-          child: Column(
-            children: [
-              // Percentage
-              Text(
-                widget.level['percentage'] as String,
-                style: const TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              widget.level['title'] as String,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.textPrimary,
               ),
-              const SizedBox(height: 8),
-
-              // Title
-              Text(
-                widget.level['title'] as String,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              widget.level['subtitle'] as String,
+              style: const TextStyle(
+                fontSize: 15,
+                color: AppTheme.textSecondary,
               ),
-              const SizedBox(height: 8),
-
-              // Subtitle
-              Text(
-                widget.level['subtitle'] as String,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white.withOpacity(0.9),
-                ),
-                textAlign: TextAlign.center,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              widget.level['description'] as String,
+              style: TextStyle(
+                fontSize: 14,
+                color: AppTheme.textPrimary.withValues(alpha: 0.85),
               ),
-              const SizedBox(height: 16),
-
-              // Description
-              Text(
-                widget.level['description'] as String,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white.withOpacity(0.8),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );

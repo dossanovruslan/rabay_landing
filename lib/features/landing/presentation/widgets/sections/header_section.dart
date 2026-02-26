@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
 
-class HeaderSection extends StatefulWidget {
+class HeaderSection extends StatelessWidget {
   final Function(GlobalKey) onNavigate;
   final GlobalKey heroKey;
   final GlobalKey featuresKey;
@@ -21,84 +20,33 @@ class HeaderSection extends StatefulWidget {
   });
 
   @override
-  State<HeaderSection> createState() => _HeaderSectionState();
-}
-
-class _HeaderSectionState extends State<HeaderSection> {
-  bool _isScrolled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Listen to scroll events to change header background
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final scrollController = Scrollable.of(context).widget.controller;
-      scrollController?.addListener(_onScroll);
-    });
-  }
-
-  void _onScroll() {
-    final scrollController = Scrollable.of(context).widget.controller;
-    if (scrollController != null) {
-      if (scrollController.offset > 100 && !_isScrolled) {
-        setState(() => _isScrolled = true);
-      } else if (scrollController.offset <= 100 && _isScrolled) {
-        setState(() => _isScrolled = false);
-      }
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
-    return FadeInDown(
-      duration: const Duration(milliseconds: 800),
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          color: _isScrolled
-              ? Colors.white.withOpacity(0.95)
-              : Colors.white.withOpacity(0),
-          boxShadow: _isScrolled
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ]
-              : null,
+    return Container(
+      height: 84,
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.96),
+        border: Border(
+          bottom: BorderSide(color: Colors.grey.withValues(alpha: 0.15)),
         ),
-        child: Center(
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: 1200,
-              minHeight: isMobile ? 56 : 180,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white.withAlpha(100),
-              borderRadius: BorderRadius.circular(14),
-            ),
-
-            // margin: EdgeInsets.only(top: isMobile ? 12 : 24),
-            padding: EdgeInsets.symmetric(
-              horizontal: isMobile ? 16 : (isTablet ? 32 : 64),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Logo
-                _buildLogo(isMobile),
-
-                // Navigation Menu
-                if (!isMobile && !isTablet)
-                  _buildDesktopMenu()
-                else
-                  _buildMobileMenuButton(),
-              ],
-            ),
+      ),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 16 : (isTablet ? 32 : 48),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildLogo(isMobile),
+              if (!isMobile && !isTablet)
+                _buildDesktopMenu()
+              else
+                _buildMobileMenuButton(context),
+            ],
           ),
         ),
       ),
@@ -109,26 +57,25 @@ class _HeaderSectionState extends State<HeaderSection> {
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(8),
+          width: 36,
+          height: 36,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppTheme.primaryColor, AppTheme.primaryDark],
-            ),
-            borderRadius: BorderRadius.circular(12),
+            color: AppTheme.primaryColor.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: const Icon(
             Icons.account_balance_wallet_rounded,
-            color: Colors.white,
-            size: 24,
+            color: AppTheme.primaryColor,
+            size: 20,
           ),
         ),
         const SizedBox(width: 12),
         if (!isMobile)
           Text(
             AppConstants.appName,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w700,
               color: AppTheme.textPrimary,
             ),
           ),
@@ -139,40 +86,37 @@ class _HeaderSectionState extends State<HeaderSection> {
   Widget _buildDesktopMenu() {
     return Row(
       children: [
-        _buildMenuItem('Главная', widget.heroKey),
-        const SizedBox(width: 32),
-        _buildMenuItem('Возможности', widget.featuresKey),
-        const SizedBox(width: 32),
-        _buildMenuItem('Реферальная программа', widget.referralKey),
-        const SizedBox(width: 32),
-        _buildMenuItem('О нас', widget.aboutKey),
+        _buildMenuItem('Главная', heroKey),
+        const SizedBox(width: 28),
+        _buildMenuItem('Возможности', featuresKey),
+        const SizedBox(width: 28),
+        _buildMenuItem('Партнёрство', referralKey),
+        const SizedBox(width: 28),
+        _buildMenuItem('О нас', aboutKey),
       ],
     );
   }
 
   Widget _buildMenuItem(String title, GlobalKey key) {
     return InkWell(
-      onTap: () => widget.onNavigate(key),
+      onTap: () => onNavigate(key),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 6),
         child: Text(
           title,
-          style: TextStyle(
-            fontSize: 16,
+          style: const TextStyle(
+            fontSize: 15,
             fontWeight: FontWeight.w500,
-            color: _isScrolled ? AppTheme.textPrimary : AppTheme.textPrimary,
+            color: AppTheme.textPrimary,
           ),
         ),
       ),
     );
   }
 
-  Widget _buildMobileMenuButton() {
+  Widget _buildMobileMenuButton(BuildContext context) {
     return IconButton(
-      icon: Icon(
-        Icons.menu,
-        color: _isScrolled ? AppTheme.textPrimary : Colors.white,
-      ),
+      icon: const Icon(Icons.menu, color: AppTheme.textPrimary),
       onPressed: () {
         _showMobileMenu(context);
       },
@@ -191,17 +135,13 @@ class _HeaderSectionState extends State<HeaderSection> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildMobileMenuItem('Главная', widget.heroKey, context),
+            _buildMobileMenuItem('Главная', heroKey, context),
             const Divider(),
-            _buildMobileMenuItem('Возможности', widget.featuresKey, context),
+            _buildMobileMenuItem('Возможности', featuresKey, context),
             const Divider(),
-            _buildMobileMenuItem(
-              'Реферальная программа',
-              widget.referralKey,
-              context,
-            ),
+            _buildMobileMenuItem('Партнёрство', referralKey, context),
             const Divider(),
-            _buildMobileMenuItem('О нас', widget.aboutKey, context),
+            _buildMobileMenuItem('О нас', aboutKey, context),
           ],
         ),
       ),
@@ -220,7 +160,7 @@ class _HeaderSectionState extends State<HeaderSection> {
       ),
       onTap: () {
         Navigator.pop(context);
-        widget.onNavigate(key);
+        onNavigate(key);
       },
     );
   }

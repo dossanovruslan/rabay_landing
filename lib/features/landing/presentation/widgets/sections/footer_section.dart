@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'dart:html' as html;
+import 'dart:convert';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/constants/terms.dart';
@@ -20,7 +20,7 @@ class FooterSection extends StatelessWidget {
       color: AppTheme.darkFooter,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 40 : 60,
+        vertical: isMobile ? 40 : 56,
       ),
       child: Center(
         child: Container(
@@ -28,9 +28,9 @@ class FooterSection extends StatelessWidget {
           child: Column(
             children: [
               isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
-              const SizedBox(height: 40),
-              const Divider(color: Colors.white24),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
+              Divider(color: Colors.white.withValues(alpha: 0.16)),
+              const SizedBox(height: 20),
               _buildCopyright(),
             ],
           ),
@@ -72,17 +72,16 @@ class FooterSection extends StatelessWidget {
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              width: 36,
+              height: 36,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppTheme.primaryColor, AppTheme.primaryDark],
-                ),
-                borderRadius: BorderRadius.circular(12),
+                color: Colors.white.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: const Icon(
                 Icons.account_balance_wallet_rounded,
                 color: Colors.white,
-                size: 24,
+                size: 20,
               ),
             ),
             const SizedBox(width: 12),
@@ -101,7 +100,7 @@ class FooterSection extends StatelessWidget {
           AppConstants.footerDescription,
           style: TextStyle(
             fontSize: 14,
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withValues(alpha: 0.72),
             height: 1.6,
           ),
         ),
@@ -120,7 +119,7 @@ class FooterSection extends StatelessWidget {
             link['title']!,
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.82),
             ),
           ),
         );
@@ -128,17 +127,17 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  void _handleLinkTap(Map<String, String> link) {
+  Future<void> _handleLinkTap(Map<String, String> link) async {
     final type = link['type'] ?? 'link';
 
     if (type == 'terms') {
-      _showTermsInNewWindow(link);
+      await _showTermsInNewWindow(link);
     } else {
       // _launchUrl(link['url']!);
     }
   }
 
-  void _showTermsInNewWindow(Map<String, String> link) {
+  Future<void> _showTermsInNewWindow(Map<String, String> link) async {
     final contentKey = link['contentKey'];
     String htmlContent = '';
 
@@ -149,11 +148,12 @@ class FooterSection extends StatelessWidget {
     }
 
     if (htmlContent.isNotEmpty) {
-      // Открываем HTML контент в новой вкладке
-      final blob = html.Blob([htmlContent], 'text/html');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      html.window.open(url, '_blank');
-      html.Url.revokeObjectUrl(url);
+      final termsUri = Uri.dataFromString(
+        htmlContent,
+        mimeType: 'text/html',
+        encoding: utf8,
+      );
+      await launchUrl(termsUri, webOnlyWindowName: '_blank');
     }
   }
 
@@ -178,7 +178,7 @@ class FooterSection extends StatelessWidget {
             AppConstants.emailUrl.replaceAll('mailto:', ''),
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.82),
             ),
           ),
         ),
@@ -200,6 +200,8 @@ class FooterSection extends StatelessWidget {
               FontAwesomeIcons.instagram,
               AppConstants.instagramUrl,
             ),
+            const SizedBox(width: 16),
+            _buildSocialIcon(FontAwesomeIcons.threads, AppConstants.threadsUrl),
             const SizedBox(width: 16),
             _buildSocialIcon(
               FontAwesomeIcons.telegram,
@@ -224,7 +226,7 @@ class FooterSection extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(icon, color: Colors.white, size: 20),
@@ -235,7 +237,10 @@ class FooterSection extends StatelessWidget {
   Widget _buildCopyright() {
     return Text(
       AppConstants.copyrightText,
-      style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.6)),
+      style: TextStyle(
+        fontSize: 13,
+        color: Colors.white.withValues(alpha: 0.62),
+      ),
       textAlign: TextAlign.center,
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
@@ -11,7 +10,7 @@ class FeaturesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: AppTheme.surfaceColor,
       child: Column(
         children: List.generate(
           AppConstants.detailedFeatures.length,
@@ -40,9 +39,9 @@ class _FeatureItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 40 : 80,
+        vertical: isMobile ? 40 : 70,
       ),
-      color: index % 2 == 0 ? Colors.white : AppTheme.lightSectionBg,
+      color: index % 2 == 0 ? AppTheme.surfaceColor : AppTheme.lightSectionBg,
       child: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1200),
@@ -81,46 +80,45 @@ class _FeatureItem extends StatelessWidget {
   }
 
   Widget _buildImageContent(bool isMobile) {
-    return FadeIn(
-      duration: const Duration(milliseconds: 1000),
-      child: Center(
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: isMobile ? 300 : 400,
-            maxHeight: isMobile ? 600 : 800,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                color: AppTheme.primaryColor.withOpacity(0.2),
-                blurRadius: 30,
-                offset: const Offset(0, 15),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image.asset(
-              feature['image'] as String,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  height: 600,
-                  decoration: BoxDecoration(
-                    color: AppTheme.lightSectionBg,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.phone_android,
-                      size: 80,
-                      color: AppTheme.primaryColor,
-                    ),
-                  ),
-                );
-              },
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: isMobile ? 300 : 400,
+          maxHeight: isMobile ? 600 : 800,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: Image.asset(
+            feature['image'] as String,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                height: 600,
+                decoration: BoxDecoration(
+                  color: AppTheme.lightSectionBg,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.phone_android,
+                    size: 80,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -128,77 +126,73 @@ class _FeatureItem extends StatelessWidget {
   }
 
   Widget _buildTextContent(bool isMobile) {
-    return FadeIn(
-      duration: const Duration(milliseconds: 1000),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Title
-          Text(
-            feature['title'] as String,
-            style: TextStyle(
-              fontSize: isMobile ? 28 : 36,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.textPrimary,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          feature['title'] as String,
+          style: TextStyle(
+            fontSize: isMobile ? 28 : 36,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.textPrimary,
           ),
-          const SizedBox(height: 12),
-
-          // Subtitle
-          Text(
-            feature['subtitle'] as String,
-            style: TextStyle(
-              fontSize: isMobile ? 16 : 18,
-              fontWeight: FontWeight.w600,
-              color: AppTheme.primaryColor,
-            ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          feature['subtitle'] as String,
+          style: TextStyle(
+            fontSize: isMobile ? 15 : 17,
+            fontWeight: FontWeight.w600,
+            color: AppTheme.primaryColor,
           ),
-          const SizedBox(height: 24),
-
-          // Description
-          Text(
-            feature['description'] as String,
-            style: TextStyle(
-              fontSize: isMobile ? 15 : 16,
-              color: AppTheme.textSecondary,
-              height: 1.6,
-            ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          feature['description'] as String,
+          style: TextStyle(
+            fontSize: isMobile ? 15 : 16,
+            color: AppTheme.textSecondary,
+            height: 1.6,
           ),
-          const SizedBox(height: 32),
-
-          // Features list
-          ...List.generate(
-            (feature['features'] as List<String>).length,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 4),
-                    child: const Icon(
-                      Icons.check_circle,
-                      color: AppTheme.primaryColor,
-                      size: 20,
+        ),
+        const SizedBox(height: 28),
+        ...List.generate(
+          (feature['features'] as List<String>).length,
+          (itemIndex) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 3),
+                  width: 18,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryColor.withValues(alpha: 0.14),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    color: AppTheme.primaryColor,
+                    size: 13,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    (feature['features'] as List<String>)[itemIndex],
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: AppTheme.textPrimary,
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      (feature['features'] as List<String>)[index],
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: AppTheme.textPrimary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
