@@ -1139,6 +1139,54 @@ const Map<String, Map<String, Object>> _localizedData = {
           'Пераклады паміж рахункамі',
         ],
       },
+      {
+        'title': 'Назапашванні',
+        'subtitle': 'Дасягайце фінансавых мэт',
+        'description':
+            'Стварайце мэты назапашвання на пакупкі, падарожжы і навучанне. Адсочвайце прагрэс у працэнтах. Адкладайце грошы рэгулярна або разава. Хутчэй дасягайце мэт дзякуючы візуалізацыі прагрэсу.',
+        'features': [
+          'Візуалізацыя прагрэсу',
+          'Некалькі мэт назапашвання',
+          'Кантроль тэрмінаў',
+          'Матывацыйныя напаміны',
+        ],
+      },
+      {
+        'title': 'Кіраванне даўгамі',
+        'subtitle': 'Кантралюйце фінансавыя абавязкі',
+        'description':
+            'Два раздзелы: «Я павінен» і «Мне павінны». Дадавайце дэталі даўгу, тэрміны і сумы. Пазначайце частковыя пагашэнні. Атрымлівайце напаміны пра набліжэнне тэрмінаў.',
+        'features': [
+          'Асобны ўлік даўгоў',
+          'Напаміны пра плацяжы',
+          'Гісторыя пагашэнняў',
+          'Працэнтныя разлікі',
+        ],
+      },
+      {
+        'title': 'Рэгулярныя плацяжы',
+        'subtitle': 'Не прапускайце важныя плацяжы',
+        'description':
+            'Дадавайце падпіскі, камунальныя плацяжы і крэдыты. Наладжвайце частату: штодня, штотыдзень, штомесяц, штогод. Атрымлівайце напаміны перад датай плацяжу. Аўтаматычнае стварэнне транзакцый.',
+        'features': [
+          'Гнуткая налада перыядычнасці',
+          'Разумныя напаміны',
+          'Аўтаматычныя транзакцыі',
+          'Гісторыя плацяжоў',
+        ],
+      },
+      {
+        'title': 'Спіс пакупак',
+        'subtitle': 'Плануйце выдаткі загадзя',
+        'description':
+            'Стварайце спісы пакупак з цэнамі. Разлічвайце агульную суму перад паходам у краму. Пазначайце набытыя тавары. Кантралюйце спантанныя пакупкі.',
+        'features': [
+          'Некалькі спісаў пакупак',
+          'Разлік агульнай сумы',
+          'Катэгарызацыя тавараў',
+          'Хуткае даданне',
+        ],
+      },
     ],
     'referralProgram': {
       'title': 'Зарабляйце з намі',
@@ -1232,6 +1280,54 @@ const Map<String, Map<String, Object>> _localizedData = {
           'Дүйнөлүк валюталарды колдоо',
           'Авто курс которуу',
           'Эсептер аралык которуу',
+        ],
+      },
+      {
+        'title': 'Топтомдор',
+        'subtitle': 'Каржылык максаттарга жетиңиз',
+        'description':
+            'Сатып алууларга, саякатка жана окууга топтоо максаттарын түзүңүз. Прогрессти пайыз менен көзөмөлдөңүз. Акчаны үзгүлтүксүз же бир жолку түрдө бөлүңүз. Визуалдуу прогресс менен максатка тезирээк жетиңиз.',
+        'features': [
+          'Прогрессти визуалдаштыруу',
+          'Бир нече топтоо максаты',
+          'Мөөнөттөрдү көзөмөлдөө',
+          'Мотивациялык эскертмелер',
+        ],
+      },
+      {
+        'title': 'Карыздарды башкаруу',
+        'subtitle': 'Каржылык милдеттенмелерди көзөмөлдөңүз',
+        'description':
+            'Эки бөлүм: «Мен карызмын» жана «Мага карыз». Карыздын суммасын, мөөнөтүн жана деталдарын кошуңуз. Жарым-жартылай төлөмдөрдү белгилеңиз. Мөөнөт жакындаганда эскертме алыңыз.',
+        'features': [
+          'Карыздарды өзүнчө эсепке алуу',
+          'Төлөм эскертмелери',
+          'Төлөө тарыхы',
+          'Пайыздык эсептөөлөр',
+        ],
+      },
+      {
+        'title': 'Туруктуу төлөмдөр',
+        'subtitle': 'Маанилүү төлөмдөрдү өткөрүп жибербеңиз',
+        'description':
+            'Жазылууларды, коммуналдык төлөмдөрдү жана кредиттерди кошуңуз. Жыштыгын тууралаңыз: күн сайын, жума сайын, ай сайын, жыл сайын. Төлөм күнүнө чейин эскертме алыңыз. Транзакциялар автоматтык түзүлөт.',
+        'features': [
+          'Жыштыктын ийкемдүү жөндөөлөрү',
+          'Акылдуу эскертмелер',
+          'Автоматтык транзакциялар',
+          'Төлөм тарыхы',
+        ],
+      },
+      {
+        'title': 'Сатып алуу тизмеси',
+        'subtitle': 'Чыгымдарды алдын ала пландаңыз',
+        'description':
+            'Баалары менен сатып алуу тизмелерин түзүңүз. Дүкөнгө барардан мурун жалпы сумманы эсептеңиз. Сатып алынган товарларды белгилеңиз. Спонтандык сатып алууларды көзөмөлдөңүз.',
+        'features': [
+          'Бир нече сатып алуу тизмеси',
+          'Жалпы сумманы эсептөө',
+          'Товарларды категориялоо',
+          'Тез кошуу',
         ],
       },
     ],
@@ -1329,6 +1425,54 @@ const Map<String, Map<String, Object>> _localizedData = {
           'Hisoblararo o‘tkazma',
         ],
       },
+      {
+        'title': 'Jamg‘armalar',
+        'subtitle': 'Moliyaviy maqsadlarga erishing',
+        'description':
+            'Xaridlar, sayohat va ta’lim uchun jamg‘arma maqsadlarini yarating. Progressni foizlarda kuzating. Muntazam yoki bir martalik jamg‘aring. Vizual progress yordamida maqsadlarga tezroq erishing.',
+        'features': [
+          'Progress vizualizatsiyasi',
+          'Bir nechta jamg‘arma maqsadi',
+          'Muddatlarni kuzatish',
+          'Motivatsion eslatmalar',
+        ],
+      },
+      {
+        'title': 'Qarzlarni boshqarish',
+        'subtitle': 'Moliyaviy majburiyatlarni nazorat qiling',
+        'description':
+            'Ikki bo‘lim: «Men qarzdorman» va «Menga qarzdor». Qarzdorlik tafsilotlari, muddatlar va summalarni qo‘shing. Qisman to‘lovlarni belgilang. Muddat yaqinlashganda eslatmalar oling.',
+        'features': [
+          'Qarzlarni alohida hisobga olish',
+          'To‘lov eslatmalari',
+          'Qoplash tarixi',
+          'Foiz hisob-kitoblari',
+        ],
+      },
+      {
+        'title': 'Muntazam to‘lovlar',
+        'subtitle': 'Muhim to‘lovlarni o‘tkazib yubormang',
+        'description':
+            'Obunalar, kommunal to‘lovlar va kreditlarni qo‘shing. Davriylikni sozlang: har kuni, har hafta, har oy, har yil. To‘lov sanasidan oldin eslatma oling. Tranzaksiyalar avtomatik yaratiladi.',
+        'features': [
+          'Moslashuvchan davriylik sozlamalari',
+          'Aqlli eslatmalar',
+          'Avtomatik tranzaksiyalar',
+          'To‘lovlar tarixi',
+        ],
+      },
+      {
+        'title': 'Xaridlar ro‘yxati',
+        'subtitle': 'Xarajatlarni oldindan rejalashtiring',
+        'description':
+            'Narxlar bilan xarid ro‘yxatlarini yarating. Do‘konga borishdan oldin umumiy summani hisoblang. Xarid qilingan mahsulotlarni belgilang. Spontan xaridlarni nazorat qiling.',
+        'features': [
+          'Bir nechta xarid ro‘yxati',
+          'Umumiy summani hisoblash',
+          'Mahsulotlarni kategoriyalash',
+          'Tez qo‘shish',
+        ],
+      },
     ],
     'referralProgram': {
       'title': 'Biz bilan daromad qiling',
@@ -1422,6 +1566,54 @@ const Map<String, Map<String, Object>> _localizedData = {
           'Дастгирии асъорҳои ҷаҳон',
           'Ҳисоби худкори қурб',
           'Интиқол байни ҳисобҳо',
+        ],
+      },
+      {
+        'title': 'Пасандозҳо',
+        'subtitle': 'Ба ҳадафҳои молиявӣ бирасед',
+        'description':
+            'Барои харидҳо, сафар ва таҳсил ҳадафҳои пасандоз созед. Пешрафтро бо фоиз пайгирӣ кунед. Маблағро мунтазам ё якбора гузоред. Бо визуализатсияи пешрафт ба ҳадаф зудтар расед.',
+        'features': [
+          'Визуализатсияи пешрафт',
+          'Чанд ҳадафи пасандоз',
+          'Назорати муҳлатҳо',
+          'Ёдраскуниҳои ҳавасмандкунанда',
+        ],
+      },
+      {
+        'title': 'Идоракунии қарз',
+        'subtitle': 'Уҳдадориҳои молиявиро назорат кунед',
+        'description':
+            'Ду бахш: «Ман қарздор» ва «Ба ман қарздоранд». Тафсилот, муҳлат ва маблағи қарзро илова кунед. Пардохтҳои қисмиро қайд намоед. Пеш аз анҷоми муҳлат ёдрас гиред.',
+        'features': [
+          'Баҳисобгирии ҷудогонаи қарзҳо',
+          'Ёдраскуниҳои пардохт',
+          'Таърихи пардохт',
+          'Ҳисобҳои фоизӣ',
+        ],
+      },
+      {
+        'title': 'Пардохтҳои мунтазам',
+        'subtitle': 'Пардохтҳои муҳимро аз даст надиҳед',
+        'description':
+            'Обунаҳо, пардохтҳои коммуналӣ ва кредитҳоро илова кунед. Давриятро танзим кунед: ҳар рӯз, ҳар ҳафта, ҳар моҳ, ҳар сол. Пеш аз санаи пардохт ёдрас гиред. Транзаксияҳо худкор сохта мешаванд.',
+        'features': [
+          'Танзими чандири даврият',
+          'Ёдраскуниҳои ҳушманд',
+          'Транзаксияҳои худкор',
+          'Таърихи пардохтҳо',
+        ],
+      },
+      {
+        'title': 'Рӯйхати харид',
+        'subtitle': 'Хароҷотро пешакӣ банақшагирӣ кунед',
+        'description':
+            'Рӯйхати харидро бо нархҳо созед. Пеш аз рафтан ба мағоза маблағи умумиро ҳисоб кунед. Маҳсулоти харидашударо қайд кунед. Харидҳои ногаҳониро назорат кунед.',
+        'features': [
+          'Чанд рӯйхати харид',
+          'Ҳисоби маблағи умумӣ',
+          'Категориябандии молҳо',
+          'Иловаи зуд',
         ],
       },
     ],
@@ -1519,6 +1711,54 @@ const Map<String, Map<String, Object>> _localizedData = {
           'Փոխանցումներ հաշիվների միջև',
         ],
       },
+      {
+        'title': 'Խնայողություններ',
+        'subtitle': 'Հասեք ֆինանսական նպատակներին',
+        'description':
+            'Ստեղծեք խնայողության նպատակներ գնումների, ճանապարհորդության և ուսման համար։ Հետևեք առաջընթացին տոկոսներով։ Գումար խնայեք պարբերաբար կամ մեկանգամյա։ Առաջընթացի տեսանելիությամբ ավելի արագ հասեք նպատակներին։',
+        'features': [
+          'Առաջընթացի վիզուալացում',
+          'Խնայողության մի քանի նպատակ',
+          'Ժամկետների վերահսկում',
+          'Մոտիվացնող հիշեցումներ',
+        ],
+      },
+      {
+        'title': 'Պարտքերի կառավարում',
+        'subtitle': 'Վերահսկեք ֆինանսական պարտավորությունները',
+        'description':
+            'Երկու բաժին՝ «Ես պարտք եմ» և «Ինձ պարտք են»։ Ավելացրեք պարտքի մանրամասները, ժամկետներն ու գումարները։ Նշեք մասնակի մարումները։ Ստացեք հիշեցումներ ժամկետների մոտենալուն։',
+        'features': [
+          'Պարտքերի առանձին հաշվառում',
+          'Վճարման հիշեցումներ',
+          'Մարումների պատմություն',
+          'Տոկոսային հաշվարկներ',
+        ],
+      },
+      {
+        'title': 'Պարբերական վճարումներ',
+        'subtitle': 'Մի՛ բաց թողեք կարևոր վճարումները',
+        'description':
+            'Ավելացրեք բաժանորդագրություններ, կոմունալ վճարումներ և վարկեր։ Կարգավորեք պարբերականությունը՝ ամեն օր, շաբաթական, ամսական, տարեկան։ Վճարման ամսաթվից առաջ ստացեք հիշեցումներ։ Գործարքները ստեղծվում են ավտոմատ։',
+        'features': [
+          'Պարբերականության ճկուն կարգավորումներ',
+          'Խելացի հիշեցումներ',
+          'Ավտոմատ գործարքներ',
+          'Վճարումների պատմություն',
+        ],
+      },
+      {
+        'title': 'Գնումների ցանկ',
+        'subtitle': 'Պլանավորեք ծախսերը նախապես',
+        'description':
+            'Ստեղծեք գնումների ցանկեր գներով։ Մինչ խանութ գնալը հաշվարկեք ընդհանուր գումարը։ Նշեք գնված ապրանքները։ Վերահսկեք ինքնաբուխ գնումները։',
+        'features': [
+          'Գնումների մի քանի ցանկ',
+          'Ընդհանուր գումարի հաշվարկ',
+          'Ապրանքների դասակարգում',
+          'Արագ ավելացում',
+        ],
+      },
     ],
     'referralProgram': {
       'title': 'Վաստակեք մեզ հետ',
@@ -1612,6 +1852,54 @@ const Map<String, Map<String, Object>> _localizedData = {
           'Suport pentru valute globale',
           'Conversie automată a cursului',
           'Transferuri între conturi',
+        ],
+      },
+      {
+        'title': 'Economii',
+        'subtitle': 'Atinge obiectivele financiare',
+        'description':
+            'Creează obiective de economisire pentru cumpărături, călătorii și educație. Urmărește progresul în procente. Economisește regulat sau ocazional. Atinge obiectivele mai repede cu vizualizarea progresului.',
+        'features': [
+          'Vizualizarea progresului',
+          'Obiective multiple de economisire',
+          'Urmărirea termenelor',
+          'Memento-uri motivaționale',
+        ],
+      },
+      {
+        'title': 'Gestionarea datoriilor',
+        'subtitle': 'Controlează obligațiile financiare',
+        'description':
+            'Două secțiuni: «Eu datorez» și «Mi se datorează». Adaugă detalii despre datorie, termene și sume. Marchează rambursările parțiale. Primește memento-uri înainte de scadență.',
+        'features': [
+          'Evidență separată a datoriilor',
+          'Memento-uri de plată',
+          'Istoric rambursări',
+          'Calcule de dobândă',
+        ],
+      },
+      {
+        'title': 'Plăți recurente',
+        'subtitle': 'Nu rata niciodată plățile importante',
+        'description':
+            'Adaugă abonamente, utilități și credite. Setează frecvența: zilnic, săptămânal, lunar, anual. Primește memento-uri înainte de data plății. Tranzacțiile sunt create automat.',
+        'features': [
+          'Setări flexibile de recurență',
+          'Memento-uri inteligente',
+          'Tranzacții automate',
+          'Istoric plăți',
+        ],
+      },
+      {
+        'title': 'Listă de cumpărături',
+        'subtitle': 'Planifică cheltuielile din timp',
+        'description':
+            'Creează liste de cumpărături cu prețuri. Calculează suma totală înainte de mersul la magazin. Marchează produsele cumpărate. Controlează cumpărăturile impulsive.',
+        'features': [
+          'Mai multe liste de cumpărături',
+          'Calculul sumei totale',
+          'Categorisirea produselor',
+          'Adăugare rapidă',
         ],
       },
     ],
