@@ -168,6 +168,33 @@ git push origin main
 
 3. В GitHub Settings → Pages укажите кастомный домен
 
+## 🔎 SEO и верификация в поисковиках
+
+Проект уже содержит `web/sitemap.xml` и `web/robots.txt`, а в workflow деплоя включен post-build шаг, который:
+
+- актуализирует `sitemap.xml` (дата `lastmod`);
+- обновляет `robots.txt` с правильным Sitemap URL;
+- при наличии токенов добавляет верификацию Google и Bing.
+
+### Что нужно добавить в GitHub Secrets
+
+Откройте **Settings → Secrets and variables → Actions** и добавьте:
+
+- `GSC_VERIFICATION_TOKEN` — токен из Google Search Console;
+- `BING_VERIFICATION_TOKEN` — токен из Bing Webmaster Tools.
+
+После следующего деплоя workflow автоматически:
+
+- добавит meta-теги в `index.html`;
+- создаст `google<token>.html`;
+- создаст `BingSiteAuth.xml`.
+
+### Отправка sitemap в панели вебмастеров
+
+После деплоя отправьте карту сайта в обе панели:
+
+- `https://rabay.kz/sitemap.xml`
+
 ## 📱 Проверка на разных устройствах
 
 После деплоя проверьте на:

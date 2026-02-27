@@ -38,6 +38,13 @@ jobs:
       - name: Build web
         run: flutter build web --release --base-href "/"
 
+      - name: SEO post-build (sitemap/robots/verification)
+        env:
+          SITE_URL: https://rabay.kz
+          GSC_VERIFICATION_TOKEN: ${{ secrets.GSC_VERIFICATION_TOKEN }}
+          BING_VERIFICATION_TOKEN: ${{ secrets.BING_VERIFICATION_TOKEN }}
+        run: python3 tool/seo/postbuild_seo.py
+
       - name: Copy CNAME file
         run: cp CNAME build/web/CNAME
       

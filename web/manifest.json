@@ -1,13 +1,21 @@
 {
     "name": "RaBay - Учет личных финансов",
     "short_name": "RaBay",
-    "start_url": ".",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
+    "lang": "ru",
+    "dir": "ltr",
     "background_color": "#ffffff",
-    "theme_color": "#000000",
+    "theme_color": "#16b4ed",
     "description": "Простое приложение для контроля личных финансов! Следи за расходами, управляй бюджетом!",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
+    "categories": [
+        "finance",
+        "productivity"
+    ],
     "icons": [
         {
             "src": "icons/Icon-192.png",

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rabay.kz/sitemap.xml
+Host: rabay.kz

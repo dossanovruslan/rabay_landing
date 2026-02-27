@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
   <!--
@@ -20,14 +20,21 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color" content="#16b4ed">
+  <meta name="application-name" content="RaBay">
   <meta name="description"
     content="RaBay - Простое приложение для контроля личных финансов! Следи за расходами, управляй бюджетом!">
   <meta name="keywords" content="финансы, бюджет, расходы, учет, деньги, RaBay">
   <meta name="author" content="RaBay">
+  <link rel="canonical" href="https://rabay.kz/">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rabay.kz/">
+  <meta property="og:site_name" content="RaBay">
+  <meta property="og:locale" content="ru_RU">
   <meta property="og:title" content="RaBay - Учет личных финансов">
   <meta property="og:description"
     content="Простое приложение для контроля личных финансов! Следи за расходами, управляй бюджетом!">
@@ -39,6 +46,7 @@
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://rabay.kz/">
+  <meta property="twitter:site" content="@rabay_app">
   <meta property="twitter:title" content="RaBay - Учет личных финансов">
   <meta property="twitter:description"
     content="Простое приложение для контроля личных финансов! Следи за расходами, управляй бюджетом!">
@@ -53,9 +61,95 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
   <title>RaBay - Учет личных финансов</title>
   <link rel="manifest" href="manifest.json">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "RaBay",
+      "url": "https://rabay.kz/",
+      "inLanguage": "ru"
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "RaBay",
+      "url": "https://rabay.kz/",
+      "logo": "https://rabay.kz/icons/Icon-512.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "rabay.dev@gmail.com",
+        "contactType": "customer support",
+        "availableLanguage": [
+          "ru",
+          "en",
+          "kk"
+        ]
+      },
+      "sameAs": [
+        "https://www.instagram.com/rabay.kz",
+        "https://t.me/c/3693784616/1",
+        "https://www.tiktok.com/@rabay.kz"
+      ]
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "RaBay",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Android, iOS",
+      "description": "Простое приложение для контроля личных финансов: учет расходов, бюджетирование, накопления и планирование платежей.",
+      "url": "https://rabay.kz/",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Для чего подходит приложение RaBay?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RaBay помогает вести учет доходов и расходов, планировать бюджет, контролировать долги и накапливать деньги на финансовые цели."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Есть ли поддержка регулярных платежей?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, в RaBay можно настраивать регулярные платежи, получать напоминания и отслеживать историю оплат."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли пользоваться приложением бесплатно?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, приложение доступно для установки и базового использования без оплаты."
+          }
+        }
+      ]
+    }
+  </script>
 
   <style>
     body {
@@ -66,19 +160,81 @@
 
     .loading {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       height: 100vh;
+      padding: 24px;
+      box-sizing: border-box;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       color: #16b4ed;
+    }
+
+    .loading-content {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #111827;
+    }
+
+    .loading-content h1 {
+      margin: 0 0 12px;
+      color: #16b4ed;
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+
+    .loading-content p {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .loading-content ul {
+      margin: 0 0 14px;
+      padding-left: 20px;
+      color: #374151;
+    }
+
+    .loading-content a {
+      color: #16b4ed;
+      text-decoration: none;
+    }
+
+    .noscript-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color: #1f2937;
+      line-height: 1.5;
     }
   </style>
 </head>
 
 <body>
   <div class="loading">
-    <h2>Загрузка RaBay...</h2>
+    <main class="loading-content">
+      <h1>RaBay — приложение для управления личными финансами</h1>
+      <p>Учитывайте расходы, контролируйте бюджет, управляйте долгами и формируйте накопления на важные цели.</p>
+      <ul>
+        <li>Доходы и расходы по категориям</li>
+        <li>Регулярные платежи и напоминания</li>
+        <li>Накопления и финансовые цели</li>
+        <li>Мультивалютные счета</li>
+      </ul>
+      <p>
+        Официальный сайт: <a href="https://rabay.kz/">rabay.kz</a> · Поддержка: <a
+          href="mailto:rabay.dev@gmail.com">rabay.dev@gmail.com</a>
+      </p>
+    </main>
   </div>
+  <noscript>
+    <main class="noscript-content">
+      <h2>RaBay — учёт расходов, бюджет и финансовые цели</h2>
+      <p>RaBay помогает контролировать доходы и расходы, планировать бюджет, управлять накоплениями и регулярными
+        платежами.</p>
+      <p>Для полноценной работы лендинга включите JavaScript в настройках браузера.</p>
+    </main>
+  </noscript>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 
