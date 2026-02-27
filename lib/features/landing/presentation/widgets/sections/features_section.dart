@@ -2,20 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/localization/app_localizations.dart';
 
 class FeaturesSection extends StatelessWidget {
   const FeaturesSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final imagePaths = [
+      AppConstants.screenBudget,
+      AppConstants.screenAccounts,
+      AppConstants.screenSavings,
+      AppConstants.screenAccounts,
+      AppConstants.screenBudget,
+      AppConstants.screenShoppingList,
+    ];
+
     return Container(
       width: double.infinity,
       color: AppTheme.surfaceColor,
       child: Column(
         children: List.generate(
-          AppConstants.detailedFeatures.length,
+          l10n.detailedFeatures.length,
           (index) => _FeatureItem(
-            feature: AppConstants.detailedFeatures[index],
+            feature: {
+              ...l10n.detailedFeatures[index],
+              'image': imagePaths[index],
+            },
             index: index,
           ),
         ),

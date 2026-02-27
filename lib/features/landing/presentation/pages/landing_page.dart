@@ -9,7 +9,14 @@ import '../widgets/sections/about_section.dart';
 import '../widgets/sections/footer_section.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+  final Locale currentLocale;
+  final ValueChanged<Locale> onLocaleChanged;
+
+  const LandingPage({
+    super.key,
+    required this.currentLocale,
+    required this.onLocaleChanged,
+  });
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -81,6 +88,8 @@ class _LandingPageState extends State<LandingPage> {
             featuresKey: featuresKey,
             referralKey: referralKey,
             aboutKey: aboutKey,
+            currentLocale: widget.currentLocale,
+            onLocaleChanged: widget.onLocaleChanged,
           ),
         ],
       ),

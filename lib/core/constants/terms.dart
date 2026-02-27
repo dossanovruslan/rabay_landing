@@ -381,6 +381,530 @@ const String privacyPolicy = '''
 </html>
 ''';
 
+String getLocalizedTermsContent({
+  required String contentKey,
+  required String languageCode,
+}) {
+  if (contentKey == 'privacyPolicy') {
+    switch (languageCode) {
+      case 'en':
+        return privacyPolicyEn;
+      case 'kk':
+        return privacyPolicyKk;
+      case 'uk':
+        return privacyPolicyUk;
+      default:
+        return privacyPolicy;
+    }
+  }
+
+  if (contentKey == 'termsOfService') {
+    switch (languageCode) {
+      case 'en':
+        return termsOfServiceEn;
+      case 'kk':
+        return termsOfServiceKk;
+      case 'uk':
+        return termsOfServiceUk;
+      default:
+        return termsOfService;
+    }
+  }
+
+  return termsOfService;
+}
+
+const String privacyPolicyEn = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.8;
+      color: #2c3e50;
+      background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      color: #03A8C6;
+      font-size: 2.4em;
+      margin-bottom: 24px;
+      text-align: center;
+      font-weight: 700;
+      border-bottom: 3px solid #03A8C6;
+      padding-bottom: 16px;
+    }
+    h2 {
+      color: #0296B3;
+      font-size: 1.5em;
+      margin-top: 30px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      border-left: 5px solid #03A8C6;
+      padding-left: 12px;
+    }
+    p, li { color: #34495e; font-size: 1.02em; }
+    p { margin-bottom: 14px; }
+    ul { margin: 14px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    .contact-info {
+      background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%);
+      padding: 22px;
+      border-radius: 12px;
+      margin-top: 30px;
+      border-left: 4px solid #03A8C6;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>Privacy Policy</h1>
+
+<p>This Privacy Policy explains how Sole Proprietor “Dossanov Ruslan” collects, uses, stores and protects user information when using the RaBay application.</p>
+
+<h2>1. Data Controller</h2>
+<p><strong>Entity:</strong> Sole Proprietor “Dossanov Ruslan”</p>
+<p><strong>IIN:</strong> 860214301078</p>
+<p><strong>Address:</strong> Semey, Utepbaeva street, building 50V, Republic of Kazakhstan</p>
+
+<h2>2. Data We Process</h2>
+<ul>
+  <li>Account data (login, email, authorization method)</li>
+  <li>Financial records entered by the user (income/expense/debt data)</li>
+  <li>Technical data for support (device model, OS version, carrier)</li>
+  <li>Anonymous analytics and service usage statistics</li>
+</ul>
+
+<h2>3. Purposes of Processing</h2>
+<ul>
+  <li>Providing core app functionality</li>
+  <li>User authentication and account management</li>
+  <li>Customer support and issue resolution</li>
+  <li>Service security, stability and performance improvements</li>
+</ul>
+
+<h2>4. Legal Basis and Consent</h2>
+<p>By using the app, you provide informed consent to the processing of your personal information for the purposes described in this Policy and in accordance with applicable law of the Republic of Kazakhstan.</p>
+
+<h2>5. Data Sharing</h2>
+<p>We may share data only when required to provide services, comply with legal obligations, protect legal rights, or when using trusted third-party service providers needed for app functionality.</p>
+
+<h2>6. Cookies and Similar Technologies</h2>
+<p>The app and connected web components may use cookies and similar tools to store preferences, keep sessions active, and improve user experience.</p>
+
+<h2>7. User Rights</h2>
+<ul>
+  <li>Access and update your account data</li>
+  <li>Request deletion of your account where technically possible</li>
+  <li>Contact us regarding processing and data protection issues</li>
+</ul>
+
+<h2>8. Policy Updates</h2>
+<p>We may update this Policy from time to time. The latest effective version is published in the RaBay app.</p>
+
+<div class="contact-info">
+  <p><strong>Contact:</strong> dossanovruslan@gmail.com</p>
+  <p><strong>Effective version:</strong> February 2, 2026</p>
+</div>
+
+</div>
+</body>
+</html>
+''';
+
+const String privacyPolicyKk = '''
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Құпиялылық саясаты</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.8;
+      color: #2c3e50;
+      background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 50px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    h1 { color: #03A8C6; font-size: 2.4em; margin-bottom: 24px; text-align: center; border-bottom: 3px solid #03A8C6; padding-bottom: 16px; }
+    h2 { color: #0296B3; font-size: 1.5em; margin-top: 30px; margin-bottom: 12px; border-left: 5px solid #03A8C6; padding-left: 12px; }
+    p, li { color: #34495e; font-size: 1.02em; }
+    p { margin-bottom: 14px; }
+    ul { margin: 14px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    .contact-info { background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%); padding: 22px; border-radius: 12px; margin-top: 30px; border-left: 4px solid #03A8C6; }
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>Құпиялылық саясаты</h1>
+
+<p>Осы Құпиялылық саясаты RaBay қосымшасын пайдалану кезінде ИП «Dossanov Ruslan» пайдаланушы деректерін қалай жинайтынын, өңдейтінін, сақтайтынын және қорғайтынын сипаттайды.</p>
+
+<h2>1. Деректер операторы</h2>
+<p><strong>Ұйым:</strong> ИП «Dossanov Ruslan»</p>
+<p><strong>ЖСН:</strong> 860214301078</p>
+<p><strong>Мекенжай:</strong> Қазақстан Республикасы, Семей қ., Утепбаева к-сі, 50В</p>
+
+<h2>2. Өңделетін деректер</h2>
+<ul>
+  <li>Тіркелгі деректері (логин, e-mail, кіру тәсілі)</li>
+  <li>Пайдаланушы енгізетін қаржылық жазбалар</li>
+  <li>Қолдау үшін техникалық деректер (құрылғы, ОЖ нұсқасы, оператор)</li>
+  <li>Анонимді аналитика және қолдану статистикасы</li>
+</ul>
+
+<h2>3. Өңдеу мақсаттары</h2>
+<ul>
+  <li>Қосымшаның негізгі функционалын ұсыну</li>
+  <li>Аутентификация және тіркелгіні басқару</li>
+  <li>Техникалық қолдау көрсету</li>
+  <li>Қауіпсіздік, тұрақтылық және сапаны жақсарту</li>
+</ul>
+
+<h2>4. Құқықтық негіз және келісім</h2>
+<p>Қосымшаны пайдалану арқылы сіз осы Саясатта көрсетілген мақсаттар үшін деректерді өңдеуге Қазақстан Республикасының қолданыстағы заңнамасына сәйкес келісім бересіз.</p>
+
+<h2>5. Деректерді беру</h2>
+<p>Деректер қызметті ұсыну, заң талаптарын орындау, құқықтарды қорғау немесе функционал үшін қажетті сенімді үшінші тарап сервистерін пайдалану жағдайында ғана берілуі мүмкін.</p>
+
+<h2>6. Cookie және ұқсас технологиялар</h2>
+<p>Қосымша және веб-компоненттер баптауларды сақтау, сессияны қолдау және пайдаланушы тәжірибесін жақсарту үшін cookie қолдануы мүмкін.</p>
+
+<h2>7. Пайдаланушы құқықтары</h2>
+<ul>
+  <li>Деректеріңізді қарау және жаңарту</li>
+  <li>Техникалық мүмкіндік болса, тіркелгіні жоюды сұрау</li>
+  <li>Деректерді қорғау бойынша сұрақтармен хабарласу</li>
+</ul>
+
+<h2>8. Саясатты өзгерту</h2>
+<p>Бұл Саясат мезгіл-мезгіл жаңартылуы мүмкін. Соңғы нұсқа RaBay қосымшасында жарияланады.</p>
+
+<div class="contact-info">
+  <p><strong>Байланыс:</strong> dossanovruslan@gmail.com</p>
+  <p><strong>Қолданыстағы нұсқа:</strong> 2026 ж. 2 ақпан</p>
+</div>
+
+</div>
+</body>
+</html>
+''';
+
+const String privacyPolicyUk = '''
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Політика конфіденційності</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.8;
+      color: #2c3e50;
+      background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 50px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    h1 { color: #03A8C6; font-size: 2.4em; margin-bottom: 24px; text-align: center; border-bottom: 3px solid #03A8C6; padding-bottom: 16px; }
+    h2 { color: #0296B3; font-size: 1.5em; margin-top: 30px; margin-bottom: 12px; border-left: 5px solid #03A8C6; padding-left: 12px; }
+    p, li { color: #34495e; font-size: 1.02em; }
+    p { margin-bottom: 14px; }
+    ul { margin: 14px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    .contact-info { background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%); padding: 22px; border-radius: 12px; margin-top: 30px; border-left: 4px solid #03A8C6; }
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>Політика конфіденційності</h1>
+
+<p>Ця Політика конфіденційності визначає, як ФОП «Dossanov Ruslan» збирає, обробляє, зберігає та захищає дані користувачів під час використання застосунку RaBay.</p>
+
+<h2>1. Володілець даних</h2>
+<p><strong>Суб'єкт:</strong> ФОП «Dossanov Ruslan»</p>
+<p><strong>ІПН:</strong> 860214301078</p>
+<p><strong>Адреса:</strong> Республіка Казахстан, м. Семей, вул. Утепбаєва, 50В</p>
+
+<h2>2. Які дані обробляються</h2>
+<ul>
+  <li>Дані облікового запису (логін, e-mail, спосіб входу)</li>
+  <li>Фінансові записи, які вводить користувач</li>
+  <li>Технічні дані для підтримки (пристрій, версія ОС, оператор)</li>
+  <li>Анонімна аналітика та статистика використання</li>
+</ul>
+
+<h2>3. Мета обробки</h2>
+<ul>
+  <li>Надання функціоналу застосунку</li>
+  <li>Автентифікація та керування обліковим записом</li>
+  <li>Технічна підтримка</li>
+  <li>Покращення безпеки, стабільності та якості сервісу</li>
+</ul>
+
+<h2>4. Правова підстава</h2>
+<p>Користуючись застосунком, ви надаєте згоду на обробку персональної інформації в межах цієї Політики та чинного законодавства Республіки Казахстан.</p>
+
+<h2>5. Передача даних</h2>
+<p>Передача можлива лише для надання сервісу, виконання вимог закону, захисту прав або за участі необхідних перевірених сторонніх сервісів.</p>
+
+<h2>6. Cookie та подібні технології</h2>
+<p>Застосунок і веб-компоненти можуть використовувати cookie для збереження налаштувань, підтримки сесій та покращення користувацького досвіду.</p>
+
+<h2>7. Права користувача</h2>
+<ul>
+  <li>Перегляд і оновлення власних даних</li>
+  <li>Запит на видалення облікового запису (за наявності технічної можливості)</li>
+  <li>Звернення щодо обробки та захисту даних</li>
+</ul>
+
+<h2>8. Зміни політики</h2>
+<p>Політика може оновлюватися. Актуальна редакція публікується в застосунку RaBay.</p>
+
+<div class="contact-info">
+  <p><strong>Контакт:</strong> dossanovruslan@gmail.com</p>
+  <p><strong>Чинна редакція:</strong> 2 лютого 2026 р.</p>
+</div>
+
+</div>
+</body>
+</html>
+''';
+
+const String termsOfServiceEn = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.8; color: #2c3e50; background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%); padding: 20px; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 50px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    h1 { color: #03A8C6; font-size: 2.4em; margin-bottom: 24px; text-align: center; border-bottom: 3px solid #03A8C6; padding-bottom: 16px; }
+    h2 { color: #0296B3; font-size: 1.5em; margin-top: 30px; margin-bottom: 12px; border-left: 5px solid #03A8C6; padding-left: 12px; }
+    p, li { color: #34495e; font-size: 1.02em; }
+    p { margin-bottom: 14px; }
+    ul { margin: 14px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    .contact-info { background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%); padding: 22px; border-radius: 12px; margin-top: 30px; border-left: 4px solid #03A8C6; }
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>Terms of Service</h1>
+
+<p>These Terms of Service govern the use of the RaBay mobile application and related services provided by Sole Proprietor “Dossanov Ruslan”.</p>
+
+<h2>1. General Provisions</h2>
+<p>By creating an account or using the app, the user confirms acceptance of these Terms and all applicable documents referenced by them.</p>
+
+<h2>2. Service Description</h2>
+<p>RaBay provides tools for personal finance tracking, planning and analytics. Functionalities may be changed, expanded or limited without prior notice.</p>
+
+<h2>3. User Account</h2>
+<ul>
+  <li>User is responsible for accuracy of provided registration data.</li>
+  <li>User is responsible for confidentiality of login credentials.</li>
+  <li>All actions performed via the account are deemed actions of the user.</li>
+</ul>
+
+<h2>4. Rights and Obligations</h2>
+<ul>
+  <li>User agrees to lawful and fair use of the service.</li>
+  <li>Provider may suspend access in case of abuse, fraud, or legal violations.</li>
+  <li>Provider may update features and service conditions at its discretion.</li>
+</ul>
+
+<h2>5. Liability</h2>
+<p>The service is provided on an "as is" basis. The provider is not liable for indirect damages, downtime caused by third-party services, or user losses resulting from incorrect input data.</p>
+
+<h2>6. Intellectual Property</h2>
+<p>All exclusive rights to the app, design, code, and related materials belong to the provider unless otherwise stated by law.</p>
+
+<h2>7. Governing Law and Disputes</h2>
+<p>These Terms are governed by the laws of the Republic of Kazakhstan. Disputes are resolved at the location of the provider under applicable procedural law.</p>
+
+<h2>8. Amendments</h2>
+<p>The provider may amend these Terms unilaterally. The current version is published in the RaBay app.</p>
+
+<div class="contact-info">
+  <p><strong>Entity:</strong> Sole Proprietor “Dossanov Ruslan”</p>
+  <p><strong>IIN:</strong> 860214301078</p>
+  <p><strong>Address:</strong> Semey, Utepbaeva street, building 50V</p>
+  <p><strong>Email:</strong> dossanovruslan@gmail.com</p>
+  <p><strong>Effective version:</strong> February 2, 2026</p>
+</div>
+
+</div>
+</body>
+</html>
+''';
+
+const String termsOfServiceKk = '''
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пайдаланушы келісімі</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.8; color: #2c3e50; background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%); padding: 20px; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 50px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    h1 { color: #03A8C6; font-size: 2.4em; margin-bottom: 24px; text-align: center; border-bottom: 3px solid #03A8C6; padding-bottom: 16px; }
+    h2 { color: #0296B3; font-size: 1.5em; margin-top: 30px; margin-bottom: 12px; border-left: 5px solid #03A8C6; padding-left: 12px; }
+    p, li { color: #34495e; font-size: 1.02em; }
+    p { margin-bottom: 14px; }
+    ul { margin: 14px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    .contact-info { background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%); padding: 22px; border-radius: 12px; margin-top: 30px; border-left: 4px solid #03A8C6; }
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>Пайдаланушы келісімі</h1>
+
+<p>Осы Келісім ИП «Dossanov Ruslan» ұсынатын RaBay мобильді қосымшасы мен сервистерін пайдалану шарттарын айқындайды.</p>
+
+<h2>1. Жалпы ережелер</h2>
+<p>Тіркелу немесе сервисті пайдалану арқылы пайдаланушы осы Келісімді және онымен байланысты құжаттарды қабылдағанын растайды.</p>
+
+<h2>2. Сервистің сипаттамасы</h2>
+<p>RaBay жеке қаржыны есепке алу, жоспарлау және талдау құралдарын ұсынады. Функционал алдын ала ескертусіз өзгертілуі, кеңейтілуі немесе шектелуі мүмкін.</p>
+
+<h2>3. Пайдаланушы аккаунты</h2>
+<ul>
+  <li>Тіркеу деректерінің дұрыстығына пайдаланушы жауап береді.</li>
+  <li>Кіру деректерінің құпиялылығын сақтау пайдаланушының міндеті.</li>
+  <li>Аккаунт арқылы жасалған әрекеттер пайдаланушы әрекеті болып есептеледі.</li>
+</ul>
+
+<h2>4. Құқықтар мен міндеттер</h2>
+<ul>
+  <li>Пайдаланушы сервисті заңды және адал пайдалануға міндеттенеді.</li>
+  <li>Бұзушылықтар анықталса, қолжетімділік шектелуі мүмкін.</li>
+  <li>Қызмет көрсетуші шарттар мен функционалды өз қалауы бойынша жаңарта алады.</li>
+</ul>
+
+<h2>5. Жауапкершілік</h2>
+<p>Сервис «бар қалпында» ұсынылады. Жанама шығындар, үшінші тарап іркілістері және пайдаланушы енгізген қате деректер салдары үшін жауапкершілік шектеледі.</p>
+
+<h2>6. Зияткерлік меншік</h2>
+<p>Қосымшаға, дизайнға, кодқа және материалдарға айрықша құқықтар ИП «Dossanov Ruslan»-ға тиесілі.</p>
+
+<h2>7. Қолданылатын құқық және даулар</h2>
+<p>Келісім Қазақстан Республикасының заңнамасымен реттеледі. Даулар құқық иеленуші орналасқан жер бойынша қаралады.</p>
+
+<h2>8. Өзгерістер</h2>
+<p>Келісім біржақты тәртіппен өзгертілуі мүмкін. Қолданыстағы нұсқа RaBay қосымшасында жарияланады.</p>
+
+<div class="contact-info">
+  <p><strong>Ұйым:</strong> ИП «Dossanov Ruslan»</p>
+  <p><strong>ЖСН:</strong> 860214301078</p>
+  <p><strong>Мекенжай:</strong> Семей қ., Утепбаева к-сі, 50В</p>
+  <p><strong>E-mail:</strong> dossanovruslan@gmail.com</p>
+  <p><strong>Қолданыстағы нұсқа:</strong> 2026 ж. 2 ақпан</p>
+</div>
+
+</div>
+</body>
+</html>
+''';
+
+const String termsOfServiceUk = '''
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Користувацька угода</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.8; color: #2c3e50; background: linear-gradient(135deg, #03A8C6 0%, #0296B3 100%); padding: 20px; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 50px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    h1 { color: #03A8C6; font-size: 2.4em; margin-bottom: 24px; text-align: center; border-bottom: 3px solid #03A8C6; padding-bottom: 16px; }
+    h2 { color: #0296B3; font-size: 1.5em; margin-top: 30px; margin-bottom: 12px; border-left: 5px solid #03A8C6; padding-left: 12px; }
+    p, li { color: #34495e; font-size: 1.02em; }
+    p { margin-bottom: 14px; }
+    ul { margin: 14px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    .contact-info { background: linear-gradient(135deg, #03A8C615 0%, #0296B315 100%); padding: 22px; border-radius: 12px; margin-top: 30px; border-left: 4px solid #03A8C6; }
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>Користувацька угода</h1>
+
+<p>Ця Угода визначає умови використання мобільного застосунку RaBay та пов'язаних сервісів, що надаються ФОП «Dossanov Ruslan».</p>
+
+<h2>1. Загальні положення</h2>
+<p>Реєструючись або користуючись сервісом, користувач підтверджує прийняття цієї Угоди та пов'язаних документів.</p>
+
+<h2>2. Опис сервісу</h2>
+<p>RaBay надає інструменти для обліку, планування та аналітики особистих фінансів. Функціонал може змінюватися без попереднього повідомлення.</p>
+
+<h2>3. Обліковий запис</h2>
+<ul>
+  <li>Користувач відповідає за достовірність реєстраційних даних.</li>
+  <li>Користувач зобов'язаний зберігати конфіденційність даних входу.</li>
+  <li>Дії, виконані через акаунт, вважаються діями користувача.</li>
+</ul>
+
+<h2>4. Права та обов'язки</h2>
+<ul>
+  <li>Користувач повинен використовувати сервіс добросовісно і законно.</li>
+  <li>У разі порушень доступ може бути обмежений або припинений.</li>
+  <li>Провайдер має право оновлювати умови та функціонал.</li>
+</ul>
+
+<h2>5. Відповідальність</h2>
+<p>Сервіс надається за принципом «як є». Провайдер не несе відповідальності за непрямі збитки, збої сторонніх сервісів і наслідки неправильного введення даних користувачем.</p>
+
+<h2>6. Інтелектуальна власність</h2>
+<p>Усі виключні права на застосунок, дизайн, код та матеріали належать ФОП «Dossanov Ruslan».</p>
+
+<h2>7. Право та спори</h2>
+<p>Угода регулюється законодавством Республіки Казахстан. Спори розглядаються за місцезнаходженням правовласника.</p>
+
+<h2>8. Зміни</h2>
+<p>Угода може змінюватися в односторонньому порядку. Актуальна редакція публікується в застосунку RaBay.</p>
+
+<div class="contact-info">
+  <p><strong>Суб'єкт:</strong> ФОП «Dossanov Ruslan»</p>
+  <p><strong>ІПН:</strong> 860214301078</p>
+  <p><strong>Адреса:</strong> м. Семей, вул. Утепбаєва, 50В</p>
+  <p><strong>E-mail:</strong> dossanovruslan@gmail.com</p>
+  <p><strong>Чинна редакція:</strong> 2 лютого 2026 р.</p>
+</div>
+
+</div>
+</body>
+</html>
+''';
+
 const String termsOfService = '''
 <!DOCTYPE html>
 <html lang="ru">

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
-import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/localization/app_localizations.dart';
 
 class BenefitsSection extends StatelessWidget {
   const BenefitsSection({super.key});
@@ -22,57 +22,59 @@ class BenefitsSection extends StatelessWidget {
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1200),
           child: isMobile
-              ? _buildMobileLayout()
-              : (isTablet ? _buildTabletLayout() : _buildDesktopLayout()),
+              ? _buildMobileLayout(context)
+              : (isTablet
+                    ? _buildTabletLayout(context)
+                    : _buildDesktopLayout(context)),
         ),
       ),
     );
   }
 
-  Widget _buildDesktopLayout() {
+  Widget _buildDesktopLayout(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: _buildBenefitCard(0)),
+        Expanded(child: _buildBenefitCard(context, 0)),
         const SizedBox(width: 32),
-        Expanded(child: _buildBenefitCard(1)),
+        Expanded(child: _buildBenefitCard(context, 1)),
         const SizedBox(width: 32),
-        Expanded(child: _buildBenefitCard(2)),
+        Expanded(child: _buildBenefitCard(context, 2)),
       ],
     );
   }
 
-  Widget _buildTabletLayout() {
+  Widget _buildTabletLayout(BuildContext context) {
     return Column(
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _buildBenefitCard(0)),
+            Expanded(child: _buildBenefitCard(context, 0)),
             const SizedBox(width: 24),
-            Expanded(child: _buildBenefitCard(1)),
+            Expanded(child: _buildBenefitCard(context, 1)),
           ],
         ),
         const SizedBox(height: 24),
-        _buildBenefitCard(2),
+        _buildBenefitCard(context, 2),
       ],
     );
   }
 
-  Widget _buildMobileLayout() {
+  Widget _buildMobileLayout(BuildContext context) {
     return Column(
       children: [
-        _buildBenefitCard(0),
+        _buildBenefitCard(context, 0),
         const SizedBox(height: 24),
-        _buildBenefitCard(1),
+        _buildBenefitCard(context, 1),
         const SizedBox(height: 24),
-        _buildBenefitCard(2),
+        _buildBenefitCard(context, 2),
       ],
     );
   }
 
-  Widget _buildBenefitCard(int index) {
-    final benefit = AppConstants.benefits[index];
+  Widget _buildBenefitCard(BuildContext context, int index) {
+    final benefit = AppLocalizations.of(context).benefits[index];
     final icons = [
       Icons.assessment_rounded,
       Icons.track_changes_rounded,

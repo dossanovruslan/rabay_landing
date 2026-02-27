@@ -6,6 +6,7 @@ import 'dart:convert';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/constants/terms.dart';
+import '../../../../../core/localization/app_localizations.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -14,6 +15,7 @@ class FooterSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       width: double.infinity,
@@ -27,11 +29,11 @@ class FooterSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1200),
           child: Column(
             children: [
-              isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
+              isMobile ? _buildMobileLayout(l10n) : _buildDesktopLayout(l10n),
               const SizedBox(height: 32),
               Divider(color: Colors.white.withValues(alpha: 0.16)),
               const SizedBox(height: 20),
-              _buildCopyright(),
+              _buildCopyright(l10n),
             ],
           ),
         ),
@@ -39,33 +41,33 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopLayout() {
+  Widget _buildDesktopLayout(AppLocalizations l10n) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 3, child: _buildBrandSection()),
+        Expanded(flex: 3, child: _buildBrandSection(l10n)),
         const SizedBox(width: 60),
-        Expanded(flex: 4, child: _buildLinksSection()),
+        Expanded(flex: 4, child: _buildLinksSection(l10n)),
         const SizedBox(width: 60),
-        Expanded(flex: 3, child: _buildContactSection()),
+        Expanded(flex: 3, child: _buildContactSection(l10n)),
       ],
     );
   }
 
-  Widget _buildMobileLayout() {
+  Widget _buildMobileLayout(AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildBrandSection(),
+        _buildBrandSection(l10n),
         const SizedBox(height: 32),
-        _buildLinksSection(),
+        _buildLinksSection(l10n),
         const SizedBox(height: 32),
-        _buildContactSection(),
+        _buildContactSection(l10n),
       ],
     );
   }
 
-  Widget _buildBrandSection() {
+  Widget _buildBrandSection(AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,7 +88,7 @@ class FooterSection extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              AppConstants.appName,
+              l10n.appName,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -97,7 +99,7 @@ class FooterSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          AppConstants.footerDescription,
+          l10n.footerDescription,
           style: TextStyle(
             fontSize: 14,
             color: Colors.white.withValues(alpha: 0.72),
@@ -108,13 +110,13 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildLinksSection() {
+  Widget _buildLinksSection(AppLocalizations l10n) {
     return Wrap(
       spacing: 24,
       runSpacing: 12,
-      children: AppConstants.footerLinks.map((link) {
+      children: l10n.footerLinks.map((link) {
         return InkWell(
-          onTap: () => _handleLinkTap(link),
+          onTap: () => _handleLinkTap(link, l10n.languageCode),
           child: Text(
             link['title']!,
             style: TextStyle(
@@ -127,25 +129,28 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Future<void> _handleLinkTap(Map<String, String> link) async {
+  Future<void> _handleLinkTap(
+    Map<String, String> link,
+    String languageCode,
+  ) async {
     final type = link['type'] ?? 'link';
 
     if (type == 'terms') {
-      await _showTermsInNewWindow(link);
+      await _showTermsInNewWindow(link, languageCode);
     } else {
       // _launchUrl(link['url']!);
     }
   }
 
-  Future<void> _showTermsInNewWindow(Map<String, String> link) async {
+  Future<void> _showTermsInNewWindow(
+    Map<String, String> link,
+    String languageCode,
+  ) async {
     final contentKey = link['contentKey'];
-    String htmlContent = '';
-
-    if (contentKey == 'termsOfService') {
-      htmlContent = termsOfService;
-    } else if (contentKey == 'privacyPolicy') {
-      htmlContent = privacyPolicy;
-    }
+    final htmlContent = getLocalizedTermsContent(
+      contentKey: contentKey ?? '',
+      languageCode: languageCode,
+    );
 
     if (htmlContent.isNotEmpty) {
       final termsUri = Uri.dataFromString(
@@ -157,12 +162,12 @@ class FooterSection extends StatelessWidget {
     }
   }
 
-  Widget _buildContactSection() {
+  Widget _buildContactSection(AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Контакты',
+          l10n.contacts,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -186,7 +191,7 @@ class FooterSection extends StatelessWidget {
 
         // Social media
         Text(
-          'Социальные сети',
+          l10n.socialNetworks,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -234,9 +239,9 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildCopyright() {
+  Widget _buildCopyright(AppLocalizations l10n) {
     return Text(
-      AppConstants.copyrightText,
+      l10n.copyrightText,
       style: TextStyle(
         fontSize: 13,
         color: Colors.white.withValues(alpha: 0.62),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
-import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/localization/app_localizations.dart';
 
 class HeaderSection extends StatelessWidget {
   final Function(GlobalKey) onNavigate;
@@ -9,6 +9,8 @@ class HeaderSection extends StatelessWidget {
   final GlobalKey featuresKey;
   final GlobalKey referralKey;
   final GlobalKey aboutKey;
+  final Locale currentLocale;
+  final ValueChanged<Locale> onLocaleChanged;
 
   const HeaderSection({
     super.key,
@@ -17,12 +19,15 @@ class HeaderSection extends StatelessWidget {
     required this.featuresKey,
     required this.referralKey,
     required this.aboutKey,
+    required this.currentLocale,
+    required this.onLocaleChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       height: 84,
@@ -41,11 +46,17 @@ class HeaderSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildLogo(isMobile),
+              _buildLogo(isMobile, l10n),
               if (!isMobile && !isTablet)
-                _buildDesktopMenu()
+                _buildDesktopMenu(l10n)
               else
-                _buildMobileMenuButton(context),
+                Row(
+                  children: [
+                    _buildLanguageSelector(isCompact: true),
+                    const SizedBox(width: 8),
+                    _buildMobileMenuButton(context),
+                  ],
+                ),
             ],
           ),
         ),
@@ -53,7 +64,7 @@ class HeaderSection extends StatelessWidget {
     );
   }
 
-  Widget _buildLogo(bool isMobile) {
+  Widget _buildLogo(bool isMobile, AppLocalizations l10n) {
     return Row(
       children: [
         Container(
@@ -72,7 +83,7 @@ class HeaderSection extends StatelessWidget {
         const SizedBox(width: 12),
         if (!isMobile)
           Text(
-            AppConstants.appName,
+            l10n.appName,
             style: const TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.w700,
@@ -83,16 +94,18 @@ class HeaderSection extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopMenu() {
+  Widget _buildDesktopMenu(AppLocalizations l10n) {
     return Row(
       children: [
-        _buildMenuItem('Главная', heroKey),
+        _buildMenuItem(l10n.navHome, heroKey),
         const SizedBox(width: 28),
-        _buildMenuItem('Возможности', featuresKey),
+        _buildMenuItem(l10n.navFeatures, featuresKey),
         const SizedBox(width: 28),
-        _buildMenuItem('Партнёрство', referralKey),
+        _buildMenuItem(l10n.navReferral, referralKey),
         const SizedBox(width: 28),
-        _buildMenuItem('О нас', aboutKey),
+        _buildMenuItem(l10n.navAbout, aboutKey),
+        const SizedBox(width: 24),
+        _buildLanguageSelector(),
       ],
     );
   }
@@ -124,6 +137,8 @@ class HeaderSection extends StatelessWidget {
   }
 
   void _showMobileMenu(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -135,13 +150,13 @@ class HeaderSection extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildMobileMenuItem('Главная', heroKey, context),
+            _buildMobileMenuItem(l10n.navHome, heroKey, context),
             const Divider(),
-            _buildMobileMenuItem('Возможности', featuresKey, context),
+            _buildMobileMenuItem(l10n.navFeatures, featuresKey, context),
             const Divider(),
-            _buildMobileMenuItem('Партнёрство', referralKey, context),
+            _buildMobileMenuItem(l10n.navReferral, referralKey, context),
             const Divider(),
-            _buildMobileMenuItem('О нас', aboutKey, context),
+            _buildMobileMenuItem(l10n.navAbout, aboutKey, context),
           ],
         ),
       ),
@@ -162,6 +177,76 @@ class HeaderSection extends StatelessWidget {
         Navigator.pop(context);
         onNavigate(key);
       },
+    );
+  }
+
+  Widget _buildLanguageSelector({bool isCompact = false}) {
+    final buttonRadius = BorderRadius.circular(14);
+
+    return PopupMenuButton<Locale>(
+      tooltip: 'Language',
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      offset: Offset(0, isCompact ? 40 : 44),
+      onSelected: onLocaleChanged,
+      itemBuilder: (_) => const [
+        PopupMenuItem(value: Locale('ru'), child: Text('Русский')),
+        PopupMenuItem(value: Locale('en'), child: Text('English')),
+        PopupMenuItem(value: Locale('kk'), child: Text('Қазақша')),
+        PopupMenuItem(value: Locale('uk'), child: Text('Українська')),
+        PopupMenuItem(value: Locale('be'), child: Text('Беларуская')),
+        PopupMenuItem(value: Locale('ky'), child: Text('Кыргызча')),
+        PopupMenuItem(value: Locale('uz'), child: Text('Oʻzbekcha')),
+        PopupMenuItem(value: Locale('tg'), child: Text('Тоҷикӣ')),
+        PopupMenuItem(value: Locale('hy'), child: Text('Հայերեն')),
+        PopupMenuItem(value: Locale('ro'), child: Text('Moldovenească')),
+      ],
+      color: Colors.white,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        height: isCompact ? 34 : 38,
+        constraints: BoxConstraints(minWidth: isCompact ? 64 : 74),
+        padding: EdgeInsets.symmetric(horizontal: isCompact ? 10 : 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: buttonRadius,
+          border: Border.all(
+            color: AppTheme.primaryColor.withValues(alpha: 0.25),
+            width: 1.2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.language_rounded,
+              size: isCompact ? 15 : 16,
+              color: AppTheme.primaryColor,
+            ),
+            SizedBox(width: isCompact ? 5 : 6),
+            Text(
+              currentLocale.languageCode.toUpperCase(),
+              style: TextStyle(
+                fontSize: isCompact ? 11.5 : 12,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.textPrimary,
+              ),
+            ),
+            const SizedBox(width: 1),
+            Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: isCompact ? 16 : 18,
+              color: AppTheme.textSecondary,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

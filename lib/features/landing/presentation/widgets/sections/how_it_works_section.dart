@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../../core/constants/app_constants.dart';
+import '../../../../../../core/localization/app_localizations.dart';
 import '../../../../../../core/theme/app_theme.dart';
 import '../common/section_title.dart';
 
@@ -10,6 +11,7 @@ class HowItWorksSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 900;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -19,9 +21,9 @@ class HowItWorksSection extends StatelessWidget {
       color: Colors.grey[50],
       child: Column(
         children: [
-          const SectionTitle(
-            title: 'Как это работает',
-            subtitle: 'Начните контролировать бюджет за 4 шага',
+          SectionTitle(
+            title: l10n.howItWorksTitle,
+            subtitle: l10n.howItWorksSubtitle,
           ),
           const SizedBox(height: 60),
           isDesktop ? _buildDesktopSteps(context) : _buildMobileSteps(context),

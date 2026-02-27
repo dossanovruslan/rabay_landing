@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../../core/constants/app_constants.dart';
+import '../../../../../../core/localization/app_localizations.dart';
 import '../../../../../../core/theme/app_theme.dart';
 import '../common/gradient_button.dart';
 import '../common/section_title.dart';
@@ -11,6 +12,7 @@ class PricingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 900;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -20,9 +22,9 @@ class PricingSection extends StatelessWidget {
       color: Colors.grey[50],
       child: Column(
         children: [
-          const SectionTitle(
-            title: 'Простые тарифы',
-            subtitle: 'Выберите то, что подходит именно вам',
+          SectionTitle(
+            title: l10n.pricingTitle,
+            subtitle: l10n.pricingSubtitle,
           ),
           const SizedBox(height: 60),
           LayoutBuilder(
@@ -138,7 +140,7 @@ class PricingSection extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: GradientButton(
-                  text: 'Выбрать',
+                  text: AppLocalizations.of(context).pricingSelect,
                   onPressed: () {},
                   isSecondary: !isPopular,
                 ),
@@ -153,8 +155,8 @@ class PricingSection extends StatelessWidget {
               color: AppTheme.primaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Text(
-              'ПОПУЛЯРНЫЙ',
+            child: Text(
+              AppLocalizations.of(context).pricingPopular,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

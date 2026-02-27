@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import '../../../../../../core/constants/app_constants.dart';
+import '../../../../../../core/localization/app_localizations.dart';
 import '../../../../../../core/theme/app_theme.dart';
 import '../common/section_title.dart';
 
@@ -11,6 +12,7 @@ class ProblemSolutionSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 900;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -20,9 +22,9 @@ class ProblemSolutionSection extends StatelessWidget {
       color: Colors.grey[50],
       child: Column(
         children: [
-          const SectionTitle(
-            title: 'Знакомая ситуация?',
-            subtitle: 'Многие сталкиваются с этими проблемами ежедневно',
+          SectionTitle(
+            title: l10n.problemTitle,
+            subtitle: l10n.problemSubtitle,
           ),
           const SizedBox(height: 60),
 
@@ -63,9 +65,9 @@ class ProblemSolutionSection extends StatelessWidget {
           const SizedBox(height: 80),
 
           // Solution Head
-          const SectionTitle(
-            title: 'У нас есть решение',
-            subtitle: 'RaBay превращает хаос в порядок',
+          SectionTitle(
+            title: l10n.solutionTitle,
+            subtitle: l10n.solutionSubtitle,
             color: AppTheme.primaryColor,
           ),
           const SizedBox(height: 60),

@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/localization/app_localizations.dart';
 import '../common/app_button.dart';
 
 class CtaSection extends StatelessWidget {
@@ -40,27 +41,29 @@ class CtaSection extends StatelessWidget {
               ),
             ],
           ),
-          child: _buildDesktopLayout(isMobile || isTablet),
+          child: _buildDesktopLayout(context, isMobile || isTablet),
         ),
       ),
     );
   }
 
-  Widget _buildDesktopLayout(bool isCompact) {
+  Widget _buildDesktopLayout(BuildContext context, bool isCompact) {
     if (isCompact) {
-      return _buildTextContent(true);
+      return _buildTextContent(context, true);
     }
-    return Row(children: [Expanded(child: _buildTextContent(false))]);
+    return Row(children: [Expanded(child: _buildTextContent(context, false))]);
   }
 
-  Widget _buildTextContent(bool isMobile) {
+  Widget _buildTextContent(BuildContext context, bool isMobile) {
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: isMobile
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.start,
       children: [
         Text(
-          AppConstants.ctaTitle,
+          l10n.ctaTitle,
           style: TextStyle(
             fontSize: isMobile ? 30 : 40,
             fontWeight: FontWeight.w700,
@@ -71,7 +74,7 @@ class CtaSection extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         Text(
-          AppConstants.ctaSubtitle,
+          l10n.ctaSubtitle,
           style: TextStyle(
             fontSize: isMobile ? 16 : 18,
             color: AppTheme.textSecondary,
@@ -96,15 +99,15 @@ class CtaSection extends StatelessWidget {
                 ],
               ),
         const SizedBox(height: 30),
-        _buildStats(isMobile),
+        _buildStats(isMobile, l10n),
       ],
     );
   }
 
-  Widget _buildStats(bool isMobile) {
+  Widget _buildStats(bool isMobile, AppLocalizations l10n) {
     return isMobile
         ? Column(
-            children: AppConstants.stats.map((stat) {
+            children: l10n.stats.map((stat) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: _StatItem(value: stat['value']!, label: stat['label']!),
@@ -113,7 +116,7 @@ class CtaSection extends StatelessWidget {
           )
         : Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: AppConstants.stats.map((stat) {
+            children: l10n.stats.map((stat) {
               return Padding(
                 padding: const EdgeInsets.only(right: 48),
                 child: _StatItem(value: stat['value']!, label: stat['label']!),

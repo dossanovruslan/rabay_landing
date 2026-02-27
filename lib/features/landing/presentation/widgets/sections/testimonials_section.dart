@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../core/constants/app_constants.dart';
+import '../../../../../../core/localization/app_localizations.dart';
 import '../../../../../../core/theme/app_theme.dart';
 import '../common/section_title.dart';
 
@@ -11,6 +12,7 @@ class TestimonialsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 900;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 80),
@@ -18,9 +20,9 @@ class TestimonialsSection extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: isDesktop ? 120 : 24),
-            child: const SectionTitle(
-              title: 'Что говорят пользователи',
-              subtitle: 'Реальные истории успеха',
+            child: SectionTitle(
+              title: l10n.testimonialsTitle,
+              subtitle: l10n.testimonialsSubtitle,
             ),
           ),
           const SizedBox(height: 60),

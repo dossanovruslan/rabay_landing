@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../../core/constants/app_constants.dart';
+import '../../../../../../core/localization/app_localizations.dart';
 import '../common/section_title.dart';
 
 class FaqSection extends StatelessWidget {
@@ -9,6 +10,7 @@ class FaqSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 900;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -17,10 +19,7 @@ class FaqSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SectionTitle(
-            title: 'Частые вопросы',
-            subtitle: 'Мы ответили на самые популярные вопросы',
-          ),
+          SectionTitle(title: l10n.faqTitle, subtitle: l10n.faqSubtitle),
           const SizedBox(height: 60),
           Container(
             constraints: const BoxConstraints(maxWidth: 800),

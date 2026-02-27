@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/localization/app_localizations.dart';
 import '../common/app_button.dart';
 
 class HeroSection extends StatelessWidget {
@@ -55,6 +56,8 @@ class HeroSection extends StatelessWidget {
   }
 
   Widget _buildLeftContent(BuildContext context, bool isMobile) {
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: isMobile
           ? CrossAxisAlignment.center
@@ -67,9 +70,9 @@ class HeroSection extends StatelessWidget {
             color: AppTheme.primaryColor.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(100),
           ),
-          child: const Text(
-            'Личные финансы без хаоса',
-            style: TextStyle(
+          child: Text(
+            l10n.heroBadge,
+            style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: AppTheme.primaryColor,
@@ -78,7 +81,7 @@ class HeroSection extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          AppConstants.heroTitle,
+          l10n.heroTitle,
           style: TextStyle(
             fontSize: isMobile ? 34 : 52,
             fontWeight: FontWeight.w700,
@@ -89,7 +92,7 @@ class HeroSection extends StatelessWidget {
         ),
         const SizedBox(height: 22),
         Text(
-          AppConstants.heroSubtitle,
+          l10n.heroSubtitle,
           style: TextStyle(
             fontSize: isMobile ? 16 : 18,
             color: AppTheme.textSecondary,
@@ -115,7 +118,7 @@ class HeroSection extends StatelessWidget {
               ),
         const SizedBox(height: 24),
         Text(
-          AppConstants.heroMission,
+          l10n.heroMission,
           style: TextStyle(
             fontSize: isMobile ? 14 : 15,
             color: AppTheme.textSecondary,

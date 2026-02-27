@@ -3,6 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/localization/app_localizations.dart';
 import '../common/app_button.dart';
 
 class ReferralSection extends StatelessWidget {
@@ -26,22 +27,24 @@ class ReferralSection extends StatelessWidget {
           child: Column(
             children: [
               // Title Section
-              _buildTitleSection(isMobile),
+              _buildTitleSection(context, isMobile),
               SizedBox(height: isMobile ? 40 : 60),
 
               // Level Cards
-              isMobile ? _buildMobileLevelCards() : _buildDesktopLevelCards(),
+              isMobile
+                  ? _buildMobileLevelCards(context)
+                  : _buildDesktopLevelCards(context),
 
               SizedBox(height: isMobile ? 40 : 60),
 
               // How it works
-              _buildHowItWorks(isMobile),
+              _buildHowItWorks(context, isMobile),
 
               SizedBox(height: isMobile ? 32 : 40),
 
               // CTA Button
               AppButton(
-                text: 'Начать зарабатывать',
+                text: AppLocalizations.of(context).referralStartEarning,
                 icon: Icons.rocket_launch,
                 onPressed: () => _launchUrl(AppConstants.appStoreUrl),
                 backgroundColor: AppTheme.primaryColor,
@@ -62,8 +65,8 @@ class ReferralSection extends StatelessWidget {
     }
   }
 
-  Widget _buildTitleSection(bool isMobile) {
-    final program = AppConstants.referralProgram;
+  Widget _buildTitleSection(BuildContext context, bool isMobile) {
+    final program = AppLocalizations.of(context).referralProgram;
 
     return Column(
       children: [
@@ -90,8 +93,9 @@ class ReferralSection extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopLevelCards() {
-    final levels = AppConstants.referralProgram['levels'] as List;
+  Widget _buildDesktopLevelCards(BuildContext context) {
+    final levels =
+        AppLocalizations.of(context).referralProgram['levels'] as List;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,8 +114,9 @@ class ReferralSection extends StatelessWidget {
     );
   }
 
-  Widget _buildMobileLevelCards() {
-    final levels = AppConstants.referralProgram['levels'] as List;
+  Widget _buildMobileLevelCards(BuildContext context) {
+    final levels =
+        AppLocalizations.of(context).referralProgram['levels'] as List;
 
     return Column(
       children: List.generate(
@@ -124,14 +129,14 @@ class ReferralSection extends StatelessWidget {
     );
   }
 
-  Widget _buildHowItWorks(bool isMobile) {
-    final howItWorks =
-        AppConstants.referralProgram['howItWorks'] as List<String>;
+  Widget _buildHowItWorks(BuildContext context, bool isMobile) {
+    final l10n = AppLocalizations.of(context);
+    final howItWorks = l10n.referralProgram['howItWorks'] as List<String>;
 
     return Column(
       children: [
         Text(
-          'Как это работает',
+          l10n.referralHowItWorks,
           style: TextStyle(
             fontSize: isMobile ? 24 : 28,
             fontWeight: FontWeight.w700,

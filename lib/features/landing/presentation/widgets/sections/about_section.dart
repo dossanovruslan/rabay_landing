@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
+import '../../../../../core/localization/app_localizations.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -22,41 +23,43 @@ class AboutSection extends StatelessWidget {
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1200),
           child: isMobile || isTablet
-              ? _buildMobileLayout(isMobile)
-              : _buildDesktopLayout(),
+              ? _buildMobileLayout(context, isMobile)
+              : _buildDesktopLayout(context),
         ),
       ),
     );
   }
 
-  Widget _buildDesktopLayout() {
+  Widget _buildDesktopLayout(BuildContext context) {
     return Row(
       children: [
-        Expanded(flex: 5, child: _buildTextContent(false)),
+        Expanded(flex: 5, child: _buildTextContent(context, false)),
         const SizedBox(width: 80),
         Expanded(flex: 5, child: _buildImageContent(false)),
       ],
     );
   }
 
-  Widget _buildMobileLayout(bool isMobile) {
+  Widget _buildMobileLayout(BuildContext context, bool isMobile) {
     return Column(
       children: [
         _buildImageContent(isMobile),
         SizedBox(height: isMobile ? 32 : 40),
-        _buildTextContent(isMobile),
+        _buildTextContent(context, isMobile),
       ],
     );
   }
 
-  Widget _buildTextContent(bool isMobile) {
+  Widget _buildTextContent(BuildContext context, bool isMobile) {
+    final l10n = AppLocalizations.of(context);
+
     return Column(
       crossAxisAlignment: isMobile
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.start,
       children: [
         Text(
-          AppConstants.aboutTitle,
+          l10n.aboutTitle,
           style: TextStyle(
             fontSize: isMobile ? 32 : 42,
             fontWeight: FontWeight.w700,
@@ -66,7 +69,7 @@ class AboutSection extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          AppConstants.aboutDescription,
+          l10n.aboutDescription,
           style: TextStyle(
             fontSize: isMobile ? 15 : 16,
             color: AppTheme.textSecondary,
