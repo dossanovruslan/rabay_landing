@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -7,6 +8,7 @@ import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/constants/terms.dart';
 import '../../../../../core/localization/app_localizations.dart';
+import '../../../../../core/utils/web_html_opener.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -138,7 +140,10 @@ class FooterSection extends StatelessWidget {
     if (type == 'terms') {
       await _showTermsInNewWindow(link, languageCode);
     } else {
-      // _launchUrl(link['url']!);
+      final url = link['url'];
+      if (url != null && url.isNotEmpty) {
+        await _launchUrl(url);
+      }
     }
   }
 
@@ -153,6 +158,13 @@ class FooterSection extends StatelessWidget {
     );
 
     if (htmlContent.isNotEmpty) {
+      if (kIsWeb) {
+        final opened = await openHtmlInNewTab(htmlContent);
+        if (opened) {
+          return;
+        }
+      }
+
       final termsUri = Uri.dataFromString(
         htmlContent,
         mimeType: 'text/html',
