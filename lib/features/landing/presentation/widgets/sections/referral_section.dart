@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:auto_route/auto_route.dart';
 import '../../../../../core/theme/app_theme.dart';
-import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/localization/app_localizations.dart';
+import '../../../../../core/navigation/app_router.dart';
 import '../common/app_button.dart';
 
 class ReferralSection extends StatelessWidget {
@@ -46,7 +46,8 @@ class ReferralSection extends StatelessWidget {
               AppButton(
                 text: AppLocalizations.of(context).referralStartEarning,
                 icon: Icons.rocket_launch,
-                onPressed: () => _launchUrl(AppConstants.appStoreUrl),
+                onPressed: () =>
+                    context.router.push(const ReferralDetailsRoute()),
                 backgroundColor: AppTheme.primaryColor,
                 textColor: Colors.white,
                 isFullWidth: isMobile,
@@ -56,13 +57,6 @@ class ReferralSection extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> _launchUrl(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
   }
 
   Widget _buildTitleSection(BuildContext context, bool isMobile) {

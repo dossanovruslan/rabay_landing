@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
+import '../../../../../core/localization/locale_scope.dart';
 import '../widgets/sections/header_section.dart';
 import '../widgets/sections/hero_section.dart';
 import '../widgets/sections/benefits_section.dart';
@@ -8,15 +10,9 @@ import '../widgets/sections/cta_section.dart';
 import '../widgets/sections/about_section.dart';
 import '../widgets/sections/footer_section.dart';
 
+@RoutePage()
 class LandingPage extends StatefulWidget {
-  final Locale currentLocale;
-  final ValueChanged<Locale> onLocaleChanged;
-
-  const LandingPage({
-    super.key,
-    required this.currentLocale,
-    required this.onLocaleChanged,
-  });
+  const LandingPage({super.key});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -48,6 +44,9 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentLocale = LocaleScope.currentLocaleOf(context);
+    final onLocaleChanged = LocaleScope.onLocaleChangedOf(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -88,8 +87,8 @@ class _LandingPageState extends State<LandingPage> {
             featuresKey: featuresKey,
             referralKey: referralKey,
             aboutKey: aboutKey,
-            currentLocale: widget.currentLocale,
-            onLocaleChanged: widget.onLocaleChanged,
+            currentLocale: currentLocale,
+            onLocaleChanged: onLocaleChanged,
           ),
         ],
       ),

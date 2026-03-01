@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'dart:convert';
 import '../../../../../core/theme/app_theme.dart';
 import '../../../../../core/constants/app_constants.dart';
-import '../../../../../core/constants/terms.dart';
 import '../../../../../core/localization/app_localizations.dart';
-import '../../../../../core/utils/web_html_opener.dart';
+import '../../../../../core/navigation/app_router.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -31,7 +29,9 @@ class FooterSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1200),
           child: Column(
             children: [
-              isMobile ? _buildMobileLayout(l10n) : _buildDesktopLayout(l10n),
+              isMobile
+                  ? _buildMobileLayout(context, l10n)
+                  : _buildDesktopLayout(context, l10n),
               const SizedBox(height: 32),
               Divider(color: Colors.white.withValues(alpha: 0.16)),
               const SizedBox(height: 20),
@@ -43,26 +43,26 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopLayout(AppLocalizations l10n) {
+  Widget _buildDesktopLayout(BuildContext context, AppLocalizations l10n) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(flex: 3, child: _buildBrandSection(l10n)),
         const SizedBox(width: 60),
-        Expanded(flex: 4, child: _buildLinksSection(l10n)),
+        Expanded(flex: 4, child: _buildLinksSection(context, l10n)),
         const SizedBox(width: 60),
         Expanded(flex: 3, child: _buildContactSection(l10n)),
       ],
     );
   }
 
-  Widget _buildMobileLayout(AppLocalizations l10n) {
+  Widget _buildMobileLayout(BuildContext context, AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildBrandSection(l10n),
         const SizedBox(height: 32),
-        _buildLinksSection(l10n),
+        _buildLinksSection(context, l10n),
         const SizedBox(height: 32),
         _buildContactSection(l10n),
       ],
@@ -112,13 +112,13 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildLinksSection(AppLocalizations l10n) {
+  Widget _buildLinksSection(BuildContext context, AppLocalizations l10n) {
     return Wrap(
       spacing: 24,
       runSpacing: 12,
       children: l10n.footerLinks.map((link) {
         return InkWell(
-          onTap: () => _handleLinkTap(link, l10n.languageCode),
+          onTap: () => _handleLinkTap(context, link),
           child: Text(
             link['title']!,
             style: TextStyle(
@@ -132,13 +132,13 @@ class FooterSection extends StatelessWidget {
   }
 
   Future<void> _handleLinkTap(
+    BuildContext context,
     Map<String, String> link,
-    String languageCode,
   ) async {
     final type = link['type'] ?? 'link';
 
     if (type == 'terms') {
-      await _showTermsInNewWindow(link, languageCode);
+      await _openLegalScreen(context, link);
     } else {
       final url = link['url'];
       if (url != null && url.isNotEmpty) {
@@ -147,30 +147,19 @@ class FooterSection extends StatelessWidget {
     }
   }
 
-  Future<void> _showTermsInNewWindow(
+  Future<void> _openLegalScreen(
+    BuildContext context,
     Map<String, String> link,
-    String languageCode,
   ) async {
     final contentKey = link['contentKey'];
-    final htmlContent = getLocalizedTermsContent(
-      contentKey: contentKey ?? '',
-      languageCode: languageCode,
-    );
 
-    if (htmlContent.isNotEmpty) {
-      if (kIsWeb) {
-        final opened = await openHtmlInNewTab(htmlContent);
-        if (opened) {
-          return;
-        }
-      }
+    if (contentKey == 'privacyPolicy') {
+      await context.router.push(const PrivacyPolicyRoute());
+      return;
+    }
 
-      final termsUri = Uri.dataFromString(
-        htmlContent,
-        mimeType: 'text/html',
-        encoding: utf8,
-      );
-      await launchUrl(termsUri, webOnlyWindowName: '_blank');
+    if (contentKey == 'termsOfService') {
+      await context.router.push(const TermsOfServiceRoute());
     }
   }
 

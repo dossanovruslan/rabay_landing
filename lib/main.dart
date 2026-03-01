@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:auto_route/auto_route.dart';
 import 'core/theme/app_theme.dart';
 import 'core/localization/app_localizations.dart';
-import 'features/landing/presentation/pages/landing_page.dart';
+import 'core/localization/locale_scope.dart';
+import 'core/navigation/app_router.dart';
 
 /// Wraps [GlobalMaterialLocalizations.delegate] and falls back to Russian
 /// for locales not supported by the package (e.g. tg, hy, be, ky).
@@ -64,40 +66,60 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = const Locale('ru');
+  late final ValueNotifier<Locale> _localeNotifier;
+  late final RootStackRouter _appRouter;
+
+  @override
+  void initState() {
+    super.initState();
+    _localeNotifier = ValueNotifier(const Locale('ru'));
+    _appRouter = AppRouter.build();
+  }
+
+  @override
+  void dispose() {
+    _localeNotifier.dispose();
+    _appRouter.dispose();
+    super.dispose();
+  }
 
   void _changeLocale(Locale locale) {
-    if (_locale.languageCode != locale.languageCode) {
-      setState(() {
-        _locale = locale;
-      });
+    if (_localeNotifier.value.languageCode != locale.languageCode) {
+      _localeNotifier.value = locale;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: _locale,
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        _FallbackMaterialLocalizationsDelegate(),
-        GlobalWidgetsLocalizations.delegate,
-        _FallbackCupertinoLocalizationsDelegate(),
-      ],
-      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      builder: (context, child) => ResponsiveBreakpoints.builder(
-        child: child!,
-        breakpoints: [
-          const Breakpoint(start: 0, end: 600, name: MOBILE),
-          const Breakpoint(start: 601, end: 900, name: TABLET),
-          const Breakpoint(start: 901, end: 1920, name: DESKTOP),
-          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+    return ValueListenableBuilder<Locale>(
+      valueListenable: _localeNotifier,
+      builder: (context, locale, _) => MaterialApp.router(
+        locale: locale,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          _FallbackMaterialLocalizationsDelegate(),
+          GlobalWidgetsLocalizations.delegate,
+          _FallbackCupertinoLocalizationsDelegate(),
         ],
+        onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        routerConfig: _appRouter.config(),
+        builder: (context, child) => LocaleScope(
+          localeListenable: _localeNotifier,
+          onLocaleChanged: _changeLocale,
+          child: ResponsiveBreakpoints.builder(
+            child: child!,
+            breakpoints: [
+              const Breakpoint(start: 0, end: 600, name: MOBILE),
+              const Breakpoint(start: 601, end: 900, name: TABLET),
+              const Breakpoint(start: 901, end: 1920, name: DESKTOP),
+              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+            ],
+          ),
+        ),
       ),
-      home: LandingPage(currentLocale: _locale, onLocaleChanged: _changeLocale),
     );
   }
 }
