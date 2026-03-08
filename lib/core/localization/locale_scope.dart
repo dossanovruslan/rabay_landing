@@ -1,16 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-class LocaleScope extends InheritedWidget {
-  final ValueListenable<Locale> localeListenable;
+class LocaleScope extends InheritedNotifier<ValueListenable<Locale>> {
   final ValueChanged<Locale> onLocaleChanged;
 
   const LocaleScope({
     super.key,
-    required this.localeListenable,
+    required ValueListenable<Locale> localeListenable,
     required this.onLocaleChanged,
     required super.child,
-  });
+  }) : super(notifier: localeListenable);
 
   static LocaleScope of(BuildContext context) {
     final scope = context.dependOnInheritedWidgetOfExactType<LocaleScope>();
@@ -19,16 +18,10 @@ class LocaleScope extends InheritedWidget {
   }
 
   static Locale currentLocaleOf(BuildContext context) {
-    return of(context).localeListenable.value;
+    return of(context).notifier!.value;
   }
 
   static ValueChanged<Locale> onLocaleChangedOf(BuildContext context) {
     return of(context).onLocaleChanged;
-  }
-
-  @override
-  bool updateShouldNotify(covariant LocaleScope oldWidget) {
-    return localeListenable != oldWidget.localeListenable ||
-        onLocaleChanged != oldWidget.onLocaleChanged;
   }
 }
