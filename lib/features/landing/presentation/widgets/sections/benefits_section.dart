@@ -15,7 +15,7 @@ class BenefitsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 56 : 88,
+        vertical: isMobile ? 64 : 96,
       ),
       color: AppTheme.surfaceColor,
       child: Center(
@@ -32,28 +32,32 @@ class BenefitsSection extends StatelessWidget {
   }
 
   Widget _buildDesktopLayout(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(child: _buildBenefitCard(context, 0)),
-        const SizedBox(width: 32),
-        Expanded(child: _buildBenefitCard(context, 1)),
-        const SizedBox(width: 32),
-        Expanded(child: _buildBenefitCard(context, 2)),
-      ],
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(child: _buildBenefitCard(context, 0)),
+          const SizedBox(width: 28),
+          Expanded(child: _buildBenefitCard(context, 1)),
+          const SizedBox(width: 28),
+          Expanded(child: _buildBenefitCard(context, 2)),
+        ],
+      ),
     );
   }
 
   Widget _buildTabletLayout(BuildContext context) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(child: _buildBenefitCard(context, 0)),
-            const SizedBox(width: 24),
-            Expanded(child: _buildBenefitCard(context, 1)),
-          ],
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: _buildBenefitCard(context, 0)),
+              const SizedBox(width: 24),
+              Expanded(child: _buildBenefitCard(context, 1)),
+            ],
+          ),
         ),
         const SizedBox(height: 24),
         _buildBenefitCard(context, 2),
@@ -65,9 +69,9 @@ class BenefitsSection extends StatelessWidget {
     return Column(
       children: [
         _buildBenefitCard(context, 0),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
         _buildBenefitCard(context, 1),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
         _buildBenefitCard(context, 2),
       ],
     );
@@ -80,9 +84,11 @@ class BenefitsSection extends StatelessWidget {
       Icons.track_changes_rounded,
       Icons.list_alt_rounded,
     ];
+    final numbers = ['01', '02', '03'];
 
     return _BenefitCard(
       icon: icons[index],
+      number: numbers[index],
       title: benefit['title']!,
       description: benefit['description']!,
     );
@@ -91,11 +97,13 @@ class BenefitsSection extends StatelessWidget {
 
 class _BenefitCard extends StatefulWidget {
   final IconData icon;
+  final String number;
   final String title;
   final String description;
 
   const _BenefitCard({
     required this.icon,
+    required this.number,
     required this.title,
     required this.description,
   });
@@ -113,41 +121,78 @@ class _BenefitCardState extends State<_BenefitCard> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        transform: Matrix4.translationValues(0, _isHovered ? -2 : 0, 0),
-        padding: const EdgeInsets.all(30),
+        duration: const Duration(milliseconds: 280),
+        transform: Matrix4.translationValues(0, _isHovered ? -4 : 0, 0),
+        padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: _isHovered
-                ? AppTheme.primaryColor.withValues(alpha: 0.35)
-                : Colors.grey.withValues(alpha: 0.18),
+                ? AppTheme.primaryColor.withValues(alpha: 0.30)
+                : const Color(0xFFE8EDF3),
             width: 1,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: _isHovered ? 0.08 : 0.05),
-              blurRadius: _isHovered ? 16 : 10,
-              offset: Offset(0, _isHovered ? 8 : 5),
-            ),
-          ],
+          boxShadow: _isHovered
+              ? [
+                  BoxShadow(
+                    color: AppTheme.primaryColor.withValues(alpha: 0.12),
+                    blurRadius: 30,
+                    spreadRadius: -4,
+                    offset: const Offset(0, 12),
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Icon
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(widget.icon, size: 24, color: AppTheme.primaryColor),
+            // Icon + number row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Gradient icon container
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.iconGradient,
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.primaryColor.withValues(alpha: 0.25),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Icon(widget.icon, size: 26, color: Colors.white),
+                ),
+                // Decorative number
+                Text(
+                  widget.number,
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w800,
+                    color: AppTheme.primaryColor.withValues(alpha: 0.08),
+                    height: 1,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 18),
-
+            const SizedBox(height: 22),
             // Title
             Text(
               widget.title,
@@ -155,17 +200,17 @@ class _BenefitCardState extends State<_BenefitCard> {
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 color: AppTheme.textPrimary,
+                height: 1.3,
               ),
             ),
             const SizedBox(height: 12),
-
             // Description
             Text(
               widget.description,
-              style: TextStyle(
-                fontSize: 16,
+              style: const TextStyle(
+                fontSize: 15,
                 color: AppTheme.textSecondary,
-                height: 1.6,
+                height: 1.65,
               ),
             ),
           ],

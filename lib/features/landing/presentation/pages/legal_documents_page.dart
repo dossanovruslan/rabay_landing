@@ -46,43 +46,138 @@ class _LegalDocumentPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        surfaceTintColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () => context.maybePop(),
-          icon: const Icon(Icons.arrow_back, color: AppTheme.textPrimary),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: AppTheme.textPrimary,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 980),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 28),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
-                  child: _buildStyledHtmlContent(contentBlocks),
+      body: CustomScrollView(
+        slivers: [
+          _buildSliverAppBar(context, title, isPrivacy),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 980),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: const Color(0xFFE8EDF3)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.04),
+                          blurRadius: 20,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(32),
+                        child: _buildStyledHtmlContent(contentBlocks),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSliverAppBar(
+    BuildContext context,
+    String title,
+    bool isPrivacy,
+  ) {
+    final icon = isPrivacy
+        ? Icons.privacy_tip_rounded
+        : Icons.description_rounded;
+
+    return SliverAppBar(
+      expandedHeight: 160.0,
+      pinned: true,
+      backgroundColor: AppTheme.heroBackground,
+      surfaceTintColor: Colors.transparent,
+      leading: IconButton(
+        onPressed: () => context.maybePop(),
+        icon: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.12),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 18,
+          ),
+        ),
+      ),
+      flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.parallax,
+        background: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Gradient background
+            Container(
+              decoration: const BoxDecoration(gradient: AppTheme.heroGradient),
+            ),
+            // Orb
+            Positioned(
+              right: -80,
+              top: -60,
+              child: Container(
+                width: 260,
+                height: 260,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      AppTheme.primaryColor.withValues(alpha: 0.18),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // Title content
+            Positioned(
+              bottom: 24,
+              left: 72,
+              right: 20,
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor.withValues(alpha: 0.20),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppTheme.primaryColor.withValues(alpha: 0.30),
+                      ),
+                    ),
+                    child: Icon(icon, color: AppTheme.primaryColor, size: 22),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -125,10 +220,17 @@ class _LegalDocumentPage extends StatelessWidget {
       if (isHeading2 && widgets.isNotEmpty) {
         widgets.add(
           Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 14),
-            child: Divider(
-              color: Colors.grey.withValues(alpha: 0.25),
+            padding: const EdgeInsets.only(top: 12, bottom: 16),
+            child: Container(
               height: 1,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    AppTheme.primaryColor.withValues(alpha: 0.30),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
             ),
           ),
         );
@@ -137,22 +239,37 @@ class _LegalDocumentPage extends StatelessWidget {
       if (block.type == 'li') {
         widgets.add(
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 9),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Text(
-                    '${block.listPrefix ?? '•'} ',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      color: AppTheme.textPrimary,
-                      fontWeight: FontWeight.w600,
-                      height: 1.7,
+                  padding: const EdgeInsets.only(top: 5, right: 10),
+                  child: Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: block.listPrefix != null &&
+                              block.listPrefix != '•'
+                          ? AppTheme.primaryColor
+                          : AppTheme.primaryColor.withValues(alpha: 0.50),
+                      shape: BoxShape.circle,
                     ),
                   ),
                 ),
+                if (block.listPrefix != null && block.listPrefix != '•')
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6),
+                    child: Text(
+                      block.listPrefix!,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: AppTheme.primaryColor,
+                        fontWeight: FontWeight.w700,
+                        height: 1.7,
+                      ),
+                    ),
+                  ),
                 Expanded(
                   child: Text(
                     block.text,
@@ -170,50 +287,90 @@ class _LegalDocumentPage extends StatelessWidget {
         continue;
       }
 
+      if (isHeading1) {
+        widgets.add(
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 14),
+            child: ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (bounds) =>
+                  AppTheme.primaryGradient.createShader(bounds),
+              child: Text(
+                block.text,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w800,
+                  height: 1.25,
+                ),
+              ),
+            ),
+          ),
+        );
+        continue;
+      }
+
+      if (isHeading2) {
+        widgets.add(
+          Padding(
+            padding: const EdgeInsets.only(top: 4, bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 4,
+                  height: 20,
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.primaryGradient,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    block.text,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimary,
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+        continue;
+      }
+
+      if (isHeading3) {
+        widgets.add(
+          Padding(
+            padding: const EdgeInsets.only(top: 4, bottom: 8),
+            child: Text(
+              block.text,
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.textPrimary,
+                height: 1.35,
+              ),
+            ),
+          ),
+        );
+        continue;
+      }
+
       widgets.add(
         Padding(
-          padding: EdgeInsets.only(
-            top: isHeading1
-                ? 10
-                : isHeading2
-                ? 6
-                : isHeading3
-                ? 4
-                : 0,
-            bottom: isHeading1
-                ? 10
-                : isHeading2
-                ? 8
-                : isHeading3
-                ? 6
-                : 12,
-          ),
+          padding: const EdgeInsets.only(bottom: 12),
           child: Text(
             block.text,
-            textAlign: isHeading1 || isHeading2 || isHeading3
-                ? TextAlign.left
-                : TextAlign.justify,
-            style: TextStyle(
-              fontSize: isHeading1
-                  ? 28
-                  : isHeading2
-                  ? 21
-                  : isHeading3
-                  ? 18
-                  : 15,
-              fontWeight: isHeading1 || isHeading2 || isHeading3
-                  ? FontWeight.w700
-                  : FontWeight.w400,
-              color: isHeading1 || isHeading2 || isHeading3
-                  ? AppTheme.primaryColor
-                  : AppTheme.textPrimary,
-              height: isHeading1
-                  ? 1.2
-                  : isHeading2
-                  ? 1.3
-                  : isHeading3
-                  ? 1.35
-                  : 1.7,
+            textAlign: TextAlign.justify,
+            style: const TextStyle(
+              fontSize: 15,
+              color: AppTheme.textSecondary,
+              height: 1.75,
             ),
           ),
         ),
@@ -222,12 +379,34 @@ class _LegalDocumentPage extends StatelessWidget {
       if (index == blocks.length - 1) {
         widgets.add(
           Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Text(
-              'Конец документа',
-              style: TextStyle(
-                fontSize: 13,
-                color: AppTheme.textSecondary.withValues(alpha: 0.8),
+            padding: const EdgeInsets.only(top: 24),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppTheme.primaryColor.withValues(alpha: 0.06),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: AppTheme.primaryColor.withValues(alpha: 0.15),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.check_circle_outline_rounded,
+                    size: 16,
+                    color: AppTheme.primaryColor.withValues(alpha: 0.70),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Конец документа',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppTheme.primaryColor.withValues(alpha: 0.70),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

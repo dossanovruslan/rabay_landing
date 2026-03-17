@@ -10,6 +10,9 @@ class FeaturesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+
     final imagePaths = [
       AppConstants.screenBudget,
       AppConstants.screenAccounts,
@@ -23,16 +26,56 @@ class FeaturesSection extends StatelessWidget {
       width: double.infinity,
       color: AppTheme.surfaceColor,
       child: Column(
-        children: List.generate(
-          l10n.detailedFeatures.length,
-          (index) => _FeatureItem(
-            feature: {
-              ...l10n.detailedFeatures[index],
-              'image': imagePaths[index],
-            },
-            index: index,
+        children: [
+          // Section header
+          Padding(
+            padding: EdgeInsets.only(
+              top: isMobile ? 56 : 88,
+              bottom: isMobile ? 8 : 16,
+              left: isMobile ? 20 : (isTablet ? 40 : 80),
+              right: isMobile ? 20 : (isTablet ? 40 : 80),
+            ),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 1200),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primaryColor.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Text(
+                        l10n.navFeatures,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.primaryColor,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+          // Feature rows
+          ...List.generate(
+            l10n.detailedFeatures.length,
+            (index) => _FeatureItem(
+              feature: {
+                ...l10n.detailedFeatures[index],
+                'image': imagePaths[index],
+              },
+              index: index,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -50,12 +93,15 @@ class _FeatureItem extends StatelessWidget {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
     final isImageLeft = index % 2 == 0;
 
+    final bgColor =
+        index % 2 == 0 ? AppTheme.surfaceColor : AppTheme.lightSectionBg;
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 40 : 70,
+        vertical: isMobile ? 48 : 80,
       ),
-      color: index % 2 == 0 ? AppTheme.surfaceColor : AppTheme.lightSectionBg,
+      color: bgColor,
       child: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1200),
@@ -97,23 +143,34 @@ class _FeatureItem extends StatelessWidget {
     return Center(
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: isMobile ? 300 : 400,
-          maxHeight: isMobile ? 600 : 800,
+          maxWidth: isMobile ? 280 : 380,
+          maxHeight: isMobile ? 560 : 760,
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(
+            color: Colors.grey.withValues(alpha: 0.12),
+            width: 1,
+          ),
           boxShadow: [
+            // Teal glow
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
+              color: AppTheme.primaryColor.withValues(alpha: 0.16),
+              blurRadius: 50,
+              spreadRadius: -8,
+              offset: const Offset(0, 16),
+            ),
+            // Base shadow
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.07),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(28),
           child: Image.asset(
             feature['image'] as String,
             fit: BoxFit.contain,
@@ -122,7 +179,7 @@ class _FeatureItem extends StatelessWidget {
                 height: 600,
                 decoration: BoxDecoration(
                   color: AppTheme.lightSectionBg,
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(28),
                 ),
                 child: const Center(
                   child: Icon(
@@ -144,12 +201,32 @@ class _FeatureItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // Index badge
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          decoration: BoxDecoration(
+            color: AppTheme.primaryColor.withValues(alpha: 0.10),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: Text(
+            (index + 1).toString().padLeft(2, '0'),
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: AppTheme.primaryColor,
+              letterSpacing: 1,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
         Text(
           feature['title'] as String,
           style: TextStyle(
-            fontSize: isMobile ? 28 : 36,
-            fontWeight: FontWeight.w700,
+            fontSize: isMobile ? 26 : 34,
+            fontWeight: FontWeight.w800,
             color: AppTheme.textPrimary,
+            height: 1.15,
+            letterSpacing: -0.3,
           ),
         ),
         const SizedBox(height: 10),
@@ -161,35 +238,34 @@ class _FeatureItem extends StatelessWidget {
             color: AppTheme.primaryColor,
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 18),
         Text(
           feature['description'] as String,
           style: TextStyle(
             fontSize: isMobile ? 15 : 16,
             color: AppTheme.textSecondary,
-            height: 1.6,
+            height: 1.65,
           ),
         ),
         const SizedBox(height: 28),
         ...List.generate(
           (feature['features'] as List<String>).length,
           (itemIndex) => Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 11),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 3),
-                  width: 18,
-                  height: 18,
+                  width: 20,
+                  height: 20,
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryColor.withValues(alpha: 0.14),
+                    gradient: AppTheme.iconGradient,
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.check,
-                    color: AppTheme.primaryColor,
-                    size: 13,
+                    color: Colors.white,
+                    size: 12,
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -199,6 +275,7 @@ class _FeatureItem extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 15,
                       color: AppTheme.textPrimary,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

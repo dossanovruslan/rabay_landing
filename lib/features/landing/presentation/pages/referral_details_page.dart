@@ -20,64 +20,188 @@ class ReferralDetailsPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        surfaceTintColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () => context.maybePop(),
-          icon: const Icon(Icons.arrow_back, color: AppTheme.textPrimary),
-        ),
-        title: Text(
-          content.pageTitle,
-          style: const TextStyle(
-            color: AppTheme.textPrimary,
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 1000),
+      body: CustomScrollView(
+        slivers: [
+          _buildSliverAppBar(context, content),
+          SliverPadding(
             padding: EdgeInsets.symmetric(
-              horizontal: isMobile ? 20 : (isTablet ? 40 : 60),
-              vertical: isMobile ? 24 : 40,
+              horizontal: isMobile ? 16 : (isTablet ? 32 : 60),
+              vertical: isMobile ? 24 : 36,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _HeroSection(content: content),
-                SizedBox(height: isMobile ? 24 : 32),
-                _LevelsSection(content: content, isMobile: isMobile),
-                SizedBox(height: isMobile ? 24 : 32),
-                _MlmExplanationSection(content: content),
-                SizedBox(height: isMobile ? 24 : 32),
-                _StepsToStartSection(content: content),
-                SizedBox(height: isMobile ? 24 : 32),
-                _CustomPercentSection(content: content),
-                SizedBox(height: isMobile ? 24 : 32),
-                _ExtraInfoSection(content: content),
-                SizedBox(height: isMobile ? 32 : 48),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
                 Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: AppButton(
-                      text: content.btnOpenApp,
-                      icon: Icons.open_in_new,
-                      onPressed: () => _launchUrl(AppConstants.appStoreUrl),
-                      backgroundColor: AppTheme.primaryColor,
-                      textColor: Colors.white,
-                      isFullWidth: true,
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 960),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _LevelsSection(content: content, isMobile: isMobile),
+                        SizedBox(height: isMobile ? 24 : 32),
+                        _MlmExplanationSection(content: content),
+                        SizedBox(height: isMobile ? 24 : 32),
+                        _StepsToStartSection(content: content),
+                        SizedBox(height: isMobile ? 24 : 32),
+                        _CustomPercentSection(content: content),
+                        SizedBox(height: isMobile ? 24 : 32),
+                        _ExtraInfoSection(content: content),
+                        SizedBox(height: isMobile ? 32 : 48),
+                        Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 400),
+                            child: AppButton(
+                              text: content.btnOpenApp,
+                              icon: Icons.open_in_new_rounded,
+                              onPressed: () =>
+                                  _launchUrl(AppConstants.appStoreUrl),
+                              backgroundColor: AppTheme.primaryColor,
+                              textColor: Colors.white,
+                              isFullWidth: true,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 48),
+                      ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
-              ],
+              ]),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSliverAppBar(
+    BuildContext context,
+    _ReferralDetailsContent content,
+  ) {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    return SliverAppBar(
+      expandedHeight: isMobile ? 200.0 : 240.0,
+      pinned: true,
+      backgroundColor: AppTheme.heroBackground,
+      surfaceTintColor: Colors.transparent,
+      leading: IconButton(
+        onPressed: () => context.maybePop(),
+        icon: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.12),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 18,
+          ),
+        ),
+      ),
+      flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.parallax,
+        background: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Gradient background
+            Container(
+              decoration: const BoxDecoration(gradient: AppTheme.heroGradient),
+            ),
+            // Orb top right
+            Positioned(
+              right: -80,
+              top: -60,
+              child: Container(
+                width: 280,
+                height: 280,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      AppTheme.primaryColor.withValues(alpha: 0.20),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // Orb bottom left
+            Positioned(
+              left: -60,
+              bottom: -40,
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      AppTheme.primaryColor.withValues(alpha: 0.12),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // Content
+            Positioned(
+              bottom: 28,
+              left: 72,
+              right: 20,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor.withValues(alpha: 0.20),
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        color: AppTheme.primaryColor.withValues(alpha: 0.35),
+                        width: 1,
+                      ),
+                    ),
+                    child: const Text(
+                      'MLM',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.primaryColor,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    content.pageTitle,
+                    style: TextStyle(
+                      fontSize: isMobile ? 22 : 26,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      height: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    content.subtitle,
+                    style: TextStyle(
+                      fontSize: isMobile ? 13 : 14,
+                      color: Colors.white.withValues(alpha: 0.68),
+                      height: 1.5,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -91,53 +215,6 @@ class ReferralDetailsPage extends StatelessWidget {
   }
 }
 
-class _HeroSection extends StatelessWidget {
-  final _ReferralDetailsContent content;
-  const _HeroSection({required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            content.pageTitle,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.textPrimary,
-              height: 1.2,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            content.subtitle,
-            style: const TextStyle(
-              fontSize: 16,
-              color: AppTheme.textSecondary,
-              height: 1.6,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _LevelsSection extends StatelessWidget {
   final _ReferralDetailsContent content;
   final bool isMobile;
@@ -146,37 +223,24 @@ class _LevelsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cards = [
-      _LevelCard(
-        percent: '8%',
-        title: content.level1Title,
-        desc: content.level1Desc,
-      ),
-      _LevelCard(
-        percent: '4%',
-        title: content.level2Title,
-        desc: content.level2Desc,
-      ),
-      _LevelCard(
-        percent: '2%',
-        title: content.level3Title,
-        desc: content.level3Desc,
-      ),
+      _LevelCard(percent: '8%', title: content.level1Title, desc: content.level1Desc, index: 0),
+      _LevelCard(percent: '4%', title: content.level2Title, desc: content.level2Desc, index: 1),
+      _LevelCard(percent: '2%', title: content.level3Title, desc: content.level3Desc, index: 2),
     ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8, bottom: 16),
-          child: Text(
-            content.levelsTitle,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-              color: AppTheme.textPrimary,
-            ),
+        Text(
+          content.levelsTitle,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w800,
+            color: AppTheme.textPrimary,
+            letterSpacing: -0.3,
           ),
         ),
+        const SizedBox(height: 16),
         if (isMobile)
           Column(
             children: cards
@@ -210,38 +274,56 @@ class _LevelCard extends StatelessWidget {
   final String percent;
   final String title;
   final String desc;
+  final int index;
+
   const _LevelCard({
     required this.percent,
     required this.title,
     required this.desc,
+    required this.index,
   });
+
+  static const _accents = [
+    Color(0xFF038AA6),
+    Color(0xFF0560C9),
+    Color(0xFF7C3AED),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final accent = _accents[index % _accents.length];
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.primaryColor.withValues(alpha: 0.2)),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: accent.withValues(alpha: 0.18)),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.primaryColor.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: accent.withValues(alpha: 0.08),
+            blurRadius: 20,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            percent,
-            style: const TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.w800,
-              color: AppTheme.primaryColor,
-              height: 1.0,
+          ShaderMask(
+            blendMode: BlendMode.srcIn,
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [accent, accent.withValues(alpha: 0.75)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ).createShader(bounds),
+            child: Text(
+              percent,
+              style: const TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.w900,
+                height: 1.0,
+              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -284,23 +366,29 @@ class _MlmExplanationSection extends StatelessWidget {
             content.mlmDesc,
             style: const TextStyle(
               fontSize: 15,
-              color: AppTheme.textPrimary,
-              height: 1.6,
+              color: AppTheme.textSecondary,
+              height: 1.65,
             ),
           ),
           const SizedBox(height: 16),
           ...content.mlmBenefits.map(
             (benefit) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 11),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 2),
-                    child: Icon(
-                      Icons.check_circle,
-                      size: 20,
-                      color: AppTheme.primaryColor,
+                  Container(
+                    margin: const EdgeInsets.only(top: 2),
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      gradient: AppTheme.iconGradient,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 12,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -309,8 +397,8 @@ class _MlmExplanationSection extends StatelessWidget {
                       benefit,
                       style: const TextStyle(
                         fontSize: 15,
-                        color: AppTheme.textSecondary,
-                        height: 1.5,
+                        color: AppTheme.textPrimary,
+                        height: 1.55,
                       ),
                     ),
                   ),
@@ -331,7 +419,7 @@ class _StepsToStartSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SectionContainer(
-      icon: Icons.rocket_launch_outlined,
+      icon: Icons.rocket_launch_rounded,
       title: content.stepsTitle,
       child: Column(
         children: List.generate(
@@ -342,18 +430,19 @@ class _StepsToStartSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: AppTheme.primaryColor.withValues(alpha: 0.1),
+                  width: 30,
+                  height: 30,
+                  decoration: const BoxDecoration(
+                    gradient: AppTheme.primaryGradient,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
                     child: Text(
                       '${index + 1}',
                       style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.primaryColor,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        fontSize: 13,
                       ),
                     ),
                   ),
@@ -361,13 +450,13 @@ class _StepsToStartSection extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 3),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       content.steps[index],
                       style: const TextStyle(
                         fontSize: 15,
                         color: AppTheme.textPrimary,
-                        height: 1.5,
+                        height: 1.55,
                       ),
                     ),
                   ),
@@ -388,86 +477,108 @@ class _CustomPercentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppTheme.primaryColor.withValues(alpha: 0.15),
-        ),
+        gradient: AppTheme.ctaGradient,
+        borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.stars_outlined,
-                color: AppTheme.primaryColor,
-                size: 28,
+          // Decorative orb
+          Positioned(
+            right: -40,
+            top: -40,
+            child: Container(
+              width: 140,
+              height: 140,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.06),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  content.proTitle,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.stars_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      content.proTitle,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Text(
+                content.proDesc,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white.withValues(alpha: 0.80),
+                  height: 1.55,
+                ),
+              ),
+              const SizedBox(height: 16),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () async {
+                    final url = Uri.parse('https://instagram.com/rabay.kz');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.camera_alt_rounded,
+                          size: 18,
+                          color: AppTheme.primaryDark,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          content.proInsta,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.primaryDark,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            content.proDesc,
-            style: const TextStyle(
-              fontSize: 15,
-              color: AppTheme.textPrimary,
-              height: 1.5,
-            ),
-          ),
-          const SizedBox(height: 16),
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () async {
-                final url = Uri.parse('https://instagram.com/rabay.kz');
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.camera_alt_outlined,
-                      size: 18,
-                      color: AppTheme.textPrimary,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      content.proInsta,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ),
         ],
       ),
@@ -489,7 +600,7 @@ class _ExtraInfoSection extends StatelessWidget {
         style: const TextStyle(
           fontSize: 15,
           color: AppTheme.textSecondary,
-          height: 1.6,
+          height: 1.65,
         ),
       ),
     );
@@ -514,11 +625,11 @@ class _SectionContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
+        border: Border.all(color: const Color(0xFFE8EDF3)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 16,
             offset: const Offset(0, 4),
           ),
         ],
@@ -531,10 +642,17 @@ class _SectionContainer extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppTheme.backgroundColor,
+                  gradient: AppTheme.iconGradient,
                   borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.primaryColor.withValues(alpha: 0.25),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                child: Icon(icon, color: AppTheme.primaryColor, size: 24),
+                child: Icon(icon, color: Colors.white, size: 22),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -542,8 +660,9 @@ class _SectionContainer extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w800,
                     color: AppTheme.textPrimary,
+                    letterSpacing: -0.2,
                   ),
                 ),
               ),

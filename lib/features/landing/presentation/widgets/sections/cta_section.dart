@@ -17,58 +17,78 @@ class CtaSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      color: AppTheme.backgroundColor,
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-        vertical: isMobile ? 56 : 84,
-      ),
-      child: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 20 : 44,
-            vertical: isMobile ? 24 : 36,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
+      decoration: const BoxDecoration(gradient: AppTheme.ctaGradient),
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
+        children: [
+          // Decorative circles
+          Positioned(
+            right: -120,
+            top: -100,
+            child: Container(
+              width: 400,
+              height: 400,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.05),
               ),
-            ],
+            ),
           ),
-          child: _buildDesktopLayout(context, isMobile || isTablet),
-        ),
+          Positioned(
+            left: -80,
+            bottom: -60,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.04),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 60,
+            bottom: -40,
+            child: Container(
+              width: 180,
+              height: 180,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.06),
+              ),
+            ),
+          ),
+          // Content
+          Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
+                vertical: isMobile ? 64 : 96,
+              ),
+              child: _buildTextContent(context, isMobile || isTablet),
+            ),
+          ),
+        ],
       ),
     );
-  }
-
-  Widget _buildDesktopLayout(BuildContext context, bool isCompact) {
-    if (isCompact) {
-      return _buildTextContent(context, true);
-    }
-    return Row(children: [Expanded(child: _buildTextContent(context, false))]);
   }
 
   Widget _buildTextContent(BuildContext context, bool isMobile) {
     final l10n = AppLocalizations.of(context);
 
     return Column(
-      crossAxisAlignment: isMobile
-          ? CrossAxisAlignment.center
-          : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         Text(
           l10n.ctaTitle,
           style: TextStyle(
-            fontSize: isMobile ? 30 : 40,
-            fontWeight: FontWeight.w700,
-            color: AppTheme.textPrimary,
-            height: 1.2,
+            fontSize: isMobile ? 30 : 44,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+            height: 1.15,
+            letterSpacing: -0.5,
           ),
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
         ),
@@ -77,12 +97,12 @@ class CtaSection extends StatelessWidget {
           l10n.ctaSubtitle,
           style: TextStyle(
             fontSize: isMobile ? 16 : 18,
-            color: AppTheme.textSecondary,
-            height: 1.6,
+            color: Colors.white.withValues(alpha: 0.75),
+            height: 1.65,
           ),
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 36),
         isMobile
             ? Column(
                 children: [
@@ -98,7 +118,7 @@ class CtaSection extends StatelessWidget {
                   _buildGooglePlayButton(isFullWidth: false),
                 ],
               ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 36),
         _buildStats(isMobile, l10n),
       ],
     );
@@ -109,7 +129,7 @@ class CtaSection extends StatelessWidget {
         ? Column(
             children: l10n.stats.map((stat) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: 24),
+                padding: const EdgeInsets.only(bottom: 28),
                 child: _StatItem(value: stat['value']!, label: stat['label']!),
               );
             }).toList(),
@@ -118,7 +138,7 @@ class CtaSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: l10n.stats.map((stat) {
               return Padding(
-                padding: const EdgeInsets.only(right: 48),
+                padding: const EdgeInsets.only(right: 56),
                 child: _StatItem(value: stat['value']!, label: stat['label']!),
               );
             }).toList(),
@@ -130,8 +150,8 @@ class CtaSection extends StatelessWidget {
       text: 'App Store',
       icon: FontAwesomeIcons.apple,
       onPressed: () => _launchUrl(AppConstants.appStoreUrl),
-      backgroundColor: AppTheme.textPrimary,
-      textColor: Colors.white,
+      backgroundColor: Colors.white,
+      textColor: AppTheme.textPrimary,
       isFullWidth: isFullWidth,
     );
   }
@@ -141,7 +161,7 @@ class CtaSection extends StatelessWidget {
       text: 'Google Play',
       icon: FontAwesomeIcons.googlePlay,
       onPressed: () => _launchUrl(AppConstants.googlePlayUrl),
-      backgroundColor: AppTheme.primaryColor,
+      backgroundColor: Colors.white.withValues(alpha: 0.15),
       textColor: Colors.white,
       isFullWidth: isFullWidth,
     );
@@ -169,15 +189,19 @@ class _StatItem extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(
-            fontSize: 34,
-            fontWeight: FontWeight.w700,
-            color: AppTheme.textPrimary,
+            fontSize: 36,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+            height: 1,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 6),
         Text(
           label,
-          style: const TextStyle(fontSize: 14, color: AppTheme.textSecondary),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.65),
+          ),
         ),
       ],
     );

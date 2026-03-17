@@ -17,17 +17,64 @@ class HeroSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      color: AppTheme.backgroundColor,
-      child: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
-            vertical: isMobile ? 108 : (isTablet ? 120 : 132),
+      decoration: const BoxDecoration(gradient: AppTheme.heroGradient),
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
+        children: [
+          // Ambient orb — top right
+          Positioned(
+            right: -160,
+            top: -120,
+            child: _buildOrb(
+              560,
+              AppTheme.primaryColor.withValues(alpha: 0.18),
+            ),
           ),
-          child: isMobile || isTablet
-              ? _buildMobileLayout(context, isMobile)
-              : _buildDesktopLayout(context),
+          // Ambient orb — bottom left
+          Positioned(
+            left: -120,
+            bottom: -80,
+            child: _buildOrb(
+              420,
+              AppTheme.primaryColor.withValues(alpha: 0.11),
+            ),
+          ),
+          // Ambient orb — center right accent
+          Positioned(
+            right: 80,
+            bottom: 60,
+            child: _buildOrb(
+              260,
+              const Color(0xFF0560C9).withValues(alpha: 0.14),
+            ),
+          ),
+          // Content
+          Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 20 : (isTablet ? 40 : 80),
+                vertical: isMobile ? 108 : (isTablet ? 120 : 132),
+              ),
+              child: isMobile || isTablet
+                  ? _buildMobileLayout(context, isMobile)
+                  : _buildDesktopLayout(context),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrb(double size, Color color) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: RadialGradient(
+          colors: [color, Colors.transparent],
+          stops: const [0.0, 1.0],
         ),
       ),
     );
@@ -36,10 +83,8 @@ class HeroSection extends StatelessWidget {
   Widget _buildDesktopLayout(BuildContext context) {
     return Row(
       children: [
-        // Left side - Text content
         Expanded(flex: 6, child: _buildLeftContent(context, false)),
         const SizedBox(width: 80),
-        // Right side - Phone mockup
         Expanded(flex: 4, child: _buildRightContent(context, false)),
       ],
     );
@@ -59,48 +104,57 @@ class HeroSection extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return Column(
-      crossAxisAlignment: isMobile
-          ? CrossAxisAlignment.center
-          : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // Badge
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
           decoration: BoxDecoration(
-            color: AppTheme.primaryColor.withValues(alpha: 0.12),
+            color: Colors.white.withValues(alpha: 0.10),
             borderRadius: BorderRadius.circular(100),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.20),
+              width: 1,
+            ),
           ),
           child: Text(
             l10n.heroBadge,
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: AppTheme.primaryColor,
+              color: Colors.white,
+              letterSpacing: 0.3,
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 24),
+        // Title
         Text(
           l10n.heroTitle,
           style: TextStyle(
-            fontSize: isMobile ? 34 : 52,
-            fontWeight: FontWeight.w700,
-            color: AppTheme.textPrimary,
-            height: 1.14,
+            fontSize: isMobile ? 34 : 54,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+            height: 1.10,
+            letterSpacing: -0.5,
           ),
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
         ),
         const SizedBox(height: 22),
+        // Subtitle
         Text(
           l10n.heroSubtitle,
           style: TextStyle(
             fontSize: isMobile ? 16 : 18,
-            color: AppTheme.textSecondary,
-            height: 1.6,
+            color: Colors.white.withValues(alpha: 0.72),
+            height: 1.65,
           ),
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
         ),
-        const SizedBox(height: 34),
+        const SizedBox(height: 36),
+        // Buttons
         isMobile
             ? Column(
                 children: [
@@ -116,15 +170,30 @@ class HeroSection extends StatelessWidget {
                   _buildGooglePlayButton(isFullWidth: false),
                 ],
               ),
-        const SizedBox(height: 24),
-        Text(
-          l10n.heroMission,
-          style: TextStyle(
-            fontSize: isMobile ? 14 : 15,
-            color: AppTheme.textSecondary,
-            fontWeight: FontWeight.w500,
-          ),
-          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+        const SizedBox(height: 28),
+        // Mission tag line
+        Row(
+          mainAxisAlignment:
+              isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
+          children: [
+            Container(
+              width: 6,
+              height: 6,
+              decoration: const BoxDecoration(
+                color: AppTheme.accentGreen,
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              l10n.heroMission,
+              style: TextStyle(
+                fontSize: isMobile ? 14 : 15,
+                color: Colors.white.withValues(alpha: 0.60),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -134,31 +203,42 @@ class HeroSection extends StatelessWidget {
     return Center(
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: isMobile ? 300 : 390,
-          maxHeight: isMobile ? 600 : 780,
+          maxWidth: isMobile ? 280 : 360,
+          maxHeight: isMobile ? 560 : 740,
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+          borderRadius: BorderRadius.circular(32),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.15),
+            width: 1,
+          ),
           boxShadow: [
+            // Teal ambient glow
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
-              blurRadius: 24,
-              offset: const Offset(0, 10),
+              color: AppTheme.primaryColor.withValues(alpha: 0.35),
+              blurRadius: 70,
+              spreadRadius: -10,
+              offset: const Offset(0, 24),
+            ),
+            // Deep shadow
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.30),
+              blurRadius: 40,
+              offset: const Offset(0, 16),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(32),
           child: Image.asset(
             AppConstants.screenShoppingList,
             fit: BoxFit.contain,
             errorBuilder: (context, error, stackTrace) {
               return Container(
                 decoration: BoxDecoration(
-                  color: AppTheme.lightSectionBg,
-                  borderRadius: BorderRadius.circular(28),
+                  color: AppTheme.heroBgAccent,
+                  borderRadius: BorderRadius.circular(32),
                 ),
                 child: const Center(
                   child: Icon(
@@ -180,8 +260,8 @@ class HeroSection extends StatelessWidget {
       text: 'App Store',
       icon: FontAwesomeIcons.apple,
       onPressed: () => _launchUrl(AppConstants.appStoreUrl),
-      backgroundColor: AppTheme.textPrimary,
-      textColor: Colors.white,
+      backgroundColor: Colors.white,
+      textColor: AppTheme.textPrimary,
       isFullWidth: isFullWidth,
     );
   }

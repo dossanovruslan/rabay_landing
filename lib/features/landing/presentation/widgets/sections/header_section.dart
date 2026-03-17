@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../../core/theme/app_theme.dart';
@@ -29,35 +30,50 @@ class HeaderSection extends StatelessWidget {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
     final l10n = AppLocalizations.of(context);
 
-    return Container(
-      height: 84,
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.96),
-        border: Border(
-          bottom: BorderSide(color: Colors.grey.withValues(alpha: 0.15)),
-        ),
-      ),
-      child: Center(
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 16 : (isTablet ? 32 : 48),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildLogo(isMobile, l10n),
-              if (!isMobile && !isTablet)
-                _buildDesktopMenu(l10n)
-              else
-                Row(
-                  children: [
-                    _buildLanguageSelector(isCompact: true),
-                    const SizedBox(width: 8),
-                    _buildMobileMenuButton(context),
-                  ],
-                ),
+          height: 72,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.82),
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.white.withValues(alpha: 0.25),
+                width: 1,
+              ),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.06),
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
             ],
+          ),
+          child: Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 16 : (isTablet ? 32 : 48),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildLogo(isMobile, l10n),
+                  if (!isMobile && !isTablet)
+                    _buildDesktopMenu(l10n)
+                  else
+                    Row(
+                      children: [
+                        _buildLanguageSelector(isCompact: true),
+                        const SizedBox(width: 8),
+                        _buildMobileMenuButton(context),
+                      ],
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -71,12 +87,19 @@ class HeaderSection extends StatelessWidget {
           width: 36,
           height: 36,
           decoration: BoxDecoration(
-            color: AppTheme.primaryColor.withValues(alpha: 0.12),
+            gradient: AppTheme.primaryGradient,
             borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.primaryColor.withValues(alpha: 0.30),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: const Icon(
             Icons.account_balance_wallet_rounded,
-            color: AppTheme.primaryColor,
+            color: Colors.white,
             size: 20,
           ),
         ),
@@ -85,9 +108,10 @@ class HeaderSection extends StatelessWidget {
           Text(
             l10n.appName,
             style: const TextStyle(
-              fontSize: 19,
-              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
               color: AppTheme.textPrimary,
+              letterSpacing: -0.3,
             ),
           ),
       ],
@@ -98,13 +122,13 @@ class HeaderSection extends StatelessWidget {
     return Row(
       children: [
         _buildMenuItem(l10n.navHome, heroKey),
-        const SizedBox(width: 28),
+        const SizedBox(width: 32),
         _buildMenuItem(l10n.navFeatures, featuresKey),
-        const SizedBox(width: 28),
+        const SizedBox(width: 32),
         _buildMenuItem(l10n.navReferral, referralKey),
-        const SizedBox(width: 28),
+        const SizedBox(width: 32),
         _buildMenuItem(l10n.navAbout, aboutKey),
-        const SizedBox(width: 24),
+        const SizedBox(width: 28),
         _buildLanguageSelector(),
       ],
     );
@@ -113,8 +137,9 @@ class HeaderSection extends StatelessWidget {
   Widget _buildMenuItem(String title, GlobalKey key) {
     return InkWell(
       onTap: () => onNavigate(key),
+      borderRadius: BorderRadius.circular(8),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
         child: Text(
           title,
           style: const TextStyle(
@@ -129,7 +154,7 @@ class HeaderSection extends StatelessWidget {
 
   Widget _buildMobileMenuButton(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.menu, color: AppTheme.textPrimary),
+      icon: const Icon(Icons.menu_rounded, color: AppTheme.textPrimary),
       onPressed: () {
         _showMobileMenu(context);
       },
@@ -143,19 +168,28 @@ class HeaderSection extends StatelessWidget {
       context: context,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
             _buildMobileMenuItem(l10n.navHome, heroKey, context),
-            const Divider(),
+            const Divider(height: 1),
             _buildMobileMenuItem(l10n.navFeatures, featuresKey, context),
-            const Divider(),
+            const Divider(height: 1),
             _buildMobileMenuItem(l10n.navReferral, referralKey, context),
-            const Divider(),
+            const Divider(height: 1),
             _buildMobileMenuItem(l10n.navAbout, aboutKey, context),
           ],
         ),
@@ -173,6 +207,11 @@ class HeaderSection extends StatelessWidget {
         title,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
       ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios_rounded,
+        size: 14,
+        color: AppTheme.textSecondary,
+      ),
       onTap: () {
         Navigator.pop(context);
         onNavigate(key);
@@ -181,7 +220,7 @@ class HeaderSection extends StatelessWidget {
   }
 
   Widget _buildLanguageSelector({bool isCompact = false}) {
-    final buttonRadius = BorderRadius.circular(14);
+    final buttonRadius = BorderRadius.circular(12);
 
     return PopupMenuButton<Locale>(
       tooltip: 'Language',
@@ -201,32 +240,24 @@ class HeaderSection extends StatelessWidget {
         PopupMenuItem(value: Locale('ro'), child: Text('Moldovenească')),
       ],
       color: Colors.white,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        height: isCompact ? 34 : 38,
-        constraints: BoxConstraints(minWidth: isCompact ? 64 : 74),
+      child: Container(
+        height: isCompact ? 34 : 36,
+        constraints: BoxConstraints(minWidth: isCompact ? 64 : 72),
         padding: EdgeInsets.symmetric(horizontal: isCompact ? 10 : 12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppTheme.primaryColor.withValues(alpha: 0.08),
           borderRadius: buttonRadius,
           border: Border.all(
-            color: AppTheme.primaryColor.withValues(alpha: 0.25),
-            width: 1.2,
+            color: AppTheme.primaryColor.withValues(alpha: 0.20),
+            width: 1,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.language_rounded,
-              size: isCompact ? 15 : 16,
+              size: isCompact ? 14 : 15,
               color: AppTheme.primaryColor,
             ),
             SizedBox(width: isCompact ? 5 : 6),
@@ -235,14 +266,14 @@ class HeaderSection extends StatelessWidget {
               style: TextStyle(
                 fontSize: isCompact ? 11.5 : 12,
                 fontWeight: FontWeight.w700,
-                color: AppTheme.textPrimary,
+                color: AppTheme.primaryColor,
               ),
             ),
             const SizedBox(width: 1),
             Icon(
               Icons.keyboard_arrow_down_rounded,
-              size: isCompact ? 16 : 18,
-              color: AppTheme.textSecondary,
+              size: isCompact ? 16 : 17,
+              color: AppTheme.primaryColor.withValues(alpha: 0.7),
             ),
           ],
         ),
